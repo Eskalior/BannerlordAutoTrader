@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AutoTrader.GUI
+﻿namespace AutoTrader.GUI
 {
 	public interface IAutoTraderStateHandler
 	{
