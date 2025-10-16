@@ -63,9 +63,11 @@ namespace AutoTrader
                 || itemObject.ItemType == ItemObject.ItemTypeEnum.Polearm
                 || itemObject.ItemType == ItemObject.ItemTypeEnum.Arrows
                 || itemObject.ItemType == ItemObject.ItemTypeEnum.Bolts
+                || itemObject.ItemType == ItemObject.ItemTypeEnum.SlingStones
                 || itemObject.ItemType == ItemObject.ItemTypeEnum.Shield
                 || itemObject.ItemType == ItemObject.ItemTypeEnum.Bow
                 || itemObject.ItemType == ItemObject.ItemTypeEnum.Crossbow
+                || itemObject.ItemType == ItemObject.ItemTypeEnum.Sling
                 || itemObject.ItemType == ItemObject.ItemTypeEnum.Thrown
                 || itemObject.ItemType == ItemObject.ItemTypeEnum.Pistol
                 || itemObject.ItemType == ItemObject.ItemTypeEnum.Musket
