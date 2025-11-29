@@ -19,7 +19,7 @@ namespace AutoTrader.GUI
 			this._viewModel = new AutoTraderMenuViewModel(null);
 
 			// Add and configure layers
-			this._gauntletLayer = new GauntletLayer(1, "GauntletLayer", false);
+			this._gauntletLayer = new GauntletLayer("GauntletLayer", 1, false);
 			this._gauntletLayer.LoadMovie("AutoTraderConfigScreen", this._viewModel);
 			this._gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
 
