@@ -65,10 +65,10 @@ namespace AutoTrader
         {
             if (campaignGameStarter != null)
             {
-                campaignGameStarter.AddGameMenuOption("town", "trade", new TextObject("{=ATTrade}Automatically trade wares", null).ToString(),
+                campaignGameStarter.AddGameMenuOption("town", "autotrader_town", new TextObject("{=ATTrade}Automatically trade wares", null).ToString(),
                     new GameMenuOption.OnConditionDelegate(this.AutoTradeGoodsCondition),
                     new GameMenuOption.OnConsequenceDelegate(this.AutoTradeGoodsConsequence), false, 4, false);
-                campaignGameStarter.AddGameMenuOption("village", "do_nothing", new TextObject("{=ATTrade}Automatically trade wares", null).ToString(),
+                campaignGameStarter.AddGameMenuOption("village", "autotrader_village", new TextObject("{=ATTrade}Automatically trade wares", null).ToString(),
                     new GameMenuOption.OnConditionDelegate(this.AutoTradeGoodsVillageCondition),
                     new GameMenuOption.OnConsequenceDelegate(this.AutoTradeGoodsConsequence), false, 4, false);
                 campaignGameStarter.AddPlayerLine("caravan_buy_products", "caravan_talk",
