@@ -86,6 +86,10 @@ namespace AutoTrader
                 // Naval Campaign
                 campaignGameStarter.AddGameMenuOption("naval_storyline_virtualport", "autotrade_naval_campaign", "{=ATTrade}Automatically trade wares", 
                     new GameMenuOption.OnConditionDelegate(this.AutoTradeNavalCampaignCondition), new GameMenuOption.OnConsequenceDelegate(this.AutoTradeGoodsConsequence), false, 4, false, null);
+
+                // Ports
+                campaignGameStarter.AddGameMenuOption("port_menu", "autotrade_port", "{=ATTrade}Automatically trade wares",
+                    new GameMenuOption.OnConditionDelegate(this.AutoTradeNavalCampaignCondition), new GameMenuOption.OnConsequenceDelegate(this.AutoTradeGoodsConsequence), false, 4, false, null);
             }
         }
 
