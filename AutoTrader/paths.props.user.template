@@ -8,7 +8,7 @@
     <!-- 
       Set this to your Mount & Blade II Bannerlord installation directory.
     -->
-    <BannerlordPath>D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord</BannerlordPath>
+    <BannerlordPath>C:\Path\To\Your\Mount &amp; Blade II Bannerlord</BannerlordPath>
     
     <!-- 
       Optional: Override individual paths if needed
