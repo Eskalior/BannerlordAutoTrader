@@ -13,6 +13,7 @@
     <string id="ATBuyThreshold" text="Buy under % of the average price" />
     <string id="ATSellThreshold" text="Sell above % of the average price" />
     <string id="ATMaxCapacity" text="Maximum % of inventory filled by the same good" />
+    <string id="ATUseMaxFleetCapacity" text="Use fleet capacity instead of inventory capacity" />
     <string id="ATKeepGrains" text="Amount of grain to keep" />
     <string id="ATKeepConsumables" text="Amount of each other consumable to keep" />
     <string id="ATUseInventorySpace" text="Total % of inventory space the mod may use" />

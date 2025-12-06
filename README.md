@@ -1,6 +1,6 @@
 # Bannerlord AutoTrader
 
-![AutoTraderBanner](images/AutoTraderBanner.png)
+![AutoTraderBanner](images/AutoTraderWarsails.png)
 
 This is the repository for the AutoTrader mod for Mount & Blade II: Bannerlord.
 

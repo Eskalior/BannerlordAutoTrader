@@ -25,6 +25,7 @@ namespace AutoTrader
         public static int KeepConsumablesMinValue { get; set; } = 4;
         public static int KeepConsumablesMaxValue { get; set; } = 20;
         public static int UseInventorySpaceValue { get; set; } = 90;
+        public static bool UseMaxFleetCapacityValue { get; set; } = false;
         public static int KeepWagesValue { get; set; } = 3;
         public static int SearchRadiusValue { get; set; } = 300;
         public static int WeaponsArmorTierValue { get; set; } = 2;
@@ -136,6 +137,10 @@ namespace AutoTrader
                         else if (textReader.Name == "useInventorySpaceValue")
                         {
                             AutoTraderConfig.UseInventorySpaceValue = Int32.Parse(textReader.ReadString());
+                        }
+                        else if (textReader.Name == "useMaxFleetCapacityValue")
+                        {
+                            AutoTraderConfig.UseMaxFleetCapacityValue = Boolean.Parse(textReader.ReadString());
                         }
                         else if (textReader.Name == "searchRadiusValue")
                         {
@@ -258,6 +263,7 @@ namespace AutoTrader
                 textWriter.WriteElementString("keepConsumablesMinValue", AutoTraderConfig.KeepConsumablesMinValue.ToString());
                 textWriter.WriteElementString("keepConsumablesMaxValue", AutoTraderConfig.KeepConsumablesMaxValue.ToString());
                 textWriter.WriteElementString("useInventorySpaceValue", AutoTraderConfig.UseInventorySpaceValue.ToString());
+                textWriter.WriteElementString("useMaxFleetCapacityValue", AutoTraderConfig.UseMaxFleetCapacityValue.ToString());
                 textWriter.WriteElementString("keepWagesValue", AutoTraderConfig.KeepWagesValue.ToString());
                 textWriter.WriteElementString("searchRadiusValue", AutoTraderConfig.SearchRadiusValue.ToString());
                 textWriter.WriteElementString("weaponsArmorTierValue", AutoTraderConfig.WeaponsArmorTierValue.ToString());
