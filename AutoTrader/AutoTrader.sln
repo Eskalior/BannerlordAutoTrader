@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTrader", "src\AutoTrader.csproj", "{1F1F512C-0730-4263-93A0-A202CA0A1052}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other repository files", "Other repository files", "{84D27F74-D2BA-6C25-2661-968F101900D9}"
+	ProjectSection(SolutionItems) = preProject
+		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
+		Directory.Build.props = Directory.Build.props
+		..\LICENSE.txt = ..\LICENSE.txt
+		paths.props.user.template = paths.props.user.template
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		..\images\AutoTraderBanner.png = ..\images\AutoTraderBanner.png
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F1F512C-0730-4263-93A0-A202CA0A1052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F1F512C-0730-4263-93A0-A202CA0A1052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F1F512C-0730-4263-93A0-A202CA0A1052}.Debug|x64.ActiveCfg = Debug|x64
+		{1F1F512C-0730-4263-93A0-A202CA0A1052}.Debug|x64.Build.0 = Debug|x64
+		{1F1F512C-0730-4263-93A0-A202CA0A1052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F1F512C-0730-4263-93A0-A202CA0A1052}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F1F512C-0730-4263-93A0-A202CA0A1052}.Release|x64.ActiveCfg = Release|x64
+		{1F1F512C-0730-4263-93A0-A202CA0A1052}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {84D27F74-D2BA-6C25-2661-968F101900D9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3CAAA8E9-C01C-498B-B9BE-CF3061C9134A}
+	EndGlobalSection
+EndGlobal
