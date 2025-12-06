@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace AutoTrader.Warsails
@@ -27,15 +28,16 @@ namespace AutoTrader.Warsails
             try
             {
                 // First check if NavalDLC is already loaded
-                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                var navalDLCAssembly = AppDomain.CurrentDomain.GetAssemblies()
+                    .Where(assembly => assembly.GetName().Name == "NavalDLC")
+                    .FirstOrDefault();
+
+                if (navalDLCAssembly != null)
                 {
-                    if (assembly.GetName().Name == "NavalDLC")
-                    {
-                        _warsailsDLCAssembly = assembly;
-                        _isWarsailsDLCAvailable = true;
-                        AutoTraderHelpers.PrintDebugMessage("WarsailsDetector: Warsails DLC (NavalDLC) assembly already loaded");
-                        return true;
-                    }
+                    _warsailsDLCAssembly = navalDLCAssembly;
+                    _isWarsailsDLCAvailable = true;
+                    AutoTraderHelpers.PrintDebugMessage("WarsailsDetector: Warsails DLC (NavalDLC) assembly already loaded");
+                    return true;
                 }
 
                 // Try to find NavalDLC.dll file
