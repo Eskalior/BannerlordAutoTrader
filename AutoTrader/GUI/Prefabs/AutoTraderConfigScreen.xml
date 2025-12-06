@@ -238,6 +238,25 @@
                       </Children>
                     </ListPanel>
 
+                    <!-- Use max fleet capacity -->
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight" IsVisible="@IsFleetCapacityVisible">
+                      <Children>
+
+                        <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@UseMaxFleetCapacityText" />
+                        
+                        <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Slider.Slider.Width" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" IsVisible="true" UpdateChildrenStates="true">
+                          <Children>
+                            <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HorizontalAlignment="Center" VerticalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@UseMaxFleetCapacityValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
+                              <Children>
+                                <ImageWidget Id="ToggleIndicator" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="SPOptions.Checkbox.Full.Button" />
+                              </Children>
+                            </ButtonWidget>
+                          </Children>
+                        </Widget>
+                        
+                      </Children>
+                    </ListPanel>
+
                     <!-- Filled by same good -->
                     <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight">
                       <Children>
@@ -447,7 +466,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@WeaponsArmorTierText" />
-                        
+
                         <Widget Id="Option" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Slider.Slider.Height" VerticalAlignment="Center" MarginLeft="!AT.Slider.Slider.MarginLeft">
                           <Children>
                             <ListPanel Id="NumericOption" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Center" MarginLeft="20" IsVisible="true">
@@ -472,7 +491,7 @@
                             </ListPanel>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
 
@@ -491,8 +510,8 @@
                     <!-- Divider with Header-->
                     <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" LayoutImp.LayoutMethod="VerticalTopToBottom">
                       <Children>
-                      <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!AT.Heading.Divider.Width" SuggestedHeight="2" VerticalAlignment="Top" HorizontalAlignment="Center" MarginTop="-6" MarginBottom="!AT.Heading.MarginBottom" Brush="AT.Divider" />
-                      <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginTop="!AT.Heading.MarginTop" Text="@HeaderTradeText" />
+                        <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!AT.Heading.Divider.Width" SuggestedHeight="2" VerticalAlignment="Top" HorizontalAlignment="Center" MarginTop="-6" MarginBottom="!AT.Heading.MarginBottom" Brush="AT.Divider" />
+                        <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginTop="!AT.Heading.MarginTop" Text="@HeaderTradeText" />
                       </Children>
                     </ListPanel>
 
@@ -502,7 +521,7 @@
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="" />
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Check.Box.Width" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft.Header" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@BuyText" />
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Check.Box.Width" HorizontalAlignment="Center" MarginLeft="0" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@SellText" />
-                        
+
                       </Children>
                     </ListPanel>
 
@@ -511,7 +530,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@TradeHorsesText" />
-                        
+
                         <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Check.Box.Width" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft" IsVisible="true" UpdateChildrenStates="true">
                           <Children>
                             <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HorizontalAlignment="Center" VerticalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@BuyHorsesValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
@@ -531,7 +550,7 @@
                             </ButtonWidget>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
 
@@ -540,7 +559,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@TradeArmorText" />
-                        
+
                         <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Check.Box.Width" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft" IsVisible="true" UpdateChildrenStates="true">
                           <Children>
                             <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" VerticalAlignment="Center" HorizontalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@BuyArmorValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
@@ -560,7 +579,7 @@
                             </ButtonWidget>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
 
@@ -569,7 +588,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@TradeWeaponsText" />
-                        
+
                         <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Check.Box.Width" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft" IsVisible="true" UpdateChildrenStates="true">
                           <Children>
                             <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" VerticalAlignment="Center" HorizontalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@BuyWeaponsValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
@@ -589,7 +608,7 @@
                             </ButtonWidget>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
 
@@ -597,7 +616,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@TradeGoodsText" />
-                        
+
                         <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Check.Box.Width" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft" IsVisible="true" UpdateChildrenStates="true">
                           <Children>
                             <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" VerticalAlignment="Center" HorizontalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@BuyGoodsValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
@@ -617,7 +636,7 @@
                             </ButtonWidget>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
 
@@ -625,7 +644,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@TradeConsumablesText" />
-                        
+
                         <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Check.Box.Width" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft" IsVisible="true" UpdateChildrenStates="true">
                           <Children>
                             <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" VerticalAlignment="Center" HorizontalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@BuyConsumablesValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
@@ -645,7 +664,7 @@
                             </ButtonWidget>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
 
@@ -654,7 +673,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@TradeLivestockText" />
-                        
+
                         <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Check.Box.Width" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft" IsVisible="true" UpdateChildrenStates="true">
                           <Children>
                             <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" VerticalAlignment="Center" HorizontalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@BuyLivestockValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
@@ -674,15 +693,15 @@
                             </ButtonWidget>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
 
                     <!-- Divider with Header-->
                     <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" LayoutImp.LayoutMethod="VerticalTopToBottom" IsVisible="true">
                       <Children>
-                      <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!AT.Heading.Divider.Width" SuggestedHeight="2" VerticalAlignment="Top" HorizontalAlignment="Center" MarginTop="-6" MarginBottom="!AT.Heading.MarginBottom" Brush="AT.Divider" />
-                      <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginTop="!AT.Heading.MarginTop" Text="@HeaderSpecialText" />
+                        <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!AT.Heading.Divider.Width" SuggestedHeight="2" VerticalAlignment="Top" HorizontalAlignment="Center" MarginTop="-6" MarginBottom="!AT.Heading.MarginBottom" Brush="AT.Divider" />
+                        <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginTop="!AT.Heading.MarginTop" Text="@HeaderSpecialText" />
                       </Children>
                     </ListPanel>
 
@@ -691,7 +710,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@UseAltATText" />
-                        
+
                         <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Check.Box.Width.Single" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft" IsVisible="true" UpdateChildrenStates="true">
                           <Children>
                             <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HorizontalAlignment="Center" VerticalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@UseAltATValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
@@ -701,7 +720,7 @@
                             </ButtonWidget>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
 
@@ -710,7 +729,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@JunkCattleText" />
-                        
+
                         <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Check.Box.Width.Single" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft" IsVisible="true" UpdateChildrenStates="true">
                           <Children>
                             <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HorizontalAlignment="Center" VerticalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@JunkCattleValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
@@ -720,7 +739,7 @@
                             </ButtonWidget>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
 
@@ -729,7 +748,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@SellSmithingText" />
-                        
+
                         <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Check.Box.Width.Single" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft" IsVisible="true" UpdateChildrenStates="true">
                           <Children>
                             <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HorizontalAlignment="Center" VerticalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@SellSmithingValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
@@ -739,7 +758,7 @@
                             </ButtonWidget>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
 
@@ -748,7 +767,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@KeepSmeltingText" />
-                        
+
                         <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Check.Box.Width.Single" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft" IsVisible="true" UpdateChildrenStates="true">
                           <Children>
                             <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HorizontalAlignment="Center" VerticalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@KeepSmeltingValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
@@ -758,7 +777,7 @@
                             </ButtonWidget>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
 
@@ -766,7 +785,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@ResupplyHardwoodText" />
-                        
+
                         <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Check.Box.Width.Single" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft" IsVisible="true" UpdateChildrenStates="true">
                           <Children>
                             <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HorizontalAlignment="Center" VerticalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@ResupplyHardwoodValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
@@ -776,7 +795,7 @@
                             </ButtonWidget>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
 
@@ -784,7 +803,7 @@
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@ResupplyText" />
-                        
+
                         <Widget Id="BooleanOption" WidthSizePolicy="Fixed" SuggestedWidth="!AT.Check.Box.Width.Single" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="!AT.Check.Box.MarginLeft" IsVisible="true" UpdateChildrenStates="true">
                           <Children>
                             <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HorizontalAlignment="Center" VerticalAlignment="Center" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@ResupplyValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
@@ -794,10 +813,10 @@
                             </ButtonWidget>
                           </Children>
                         </Widget>
-                        
+
                       </Children>
                     </ListPanel>
-                    
+
                   </Children>
                 </ListPanel>
 
@@ -808,7 +827,7 @@
 
         <!-- Header -->
         <Standard.TopPanel Parameter.Title="@ConfigMenuText">
-         <Children>
+          <Children>
             <ListPanel DoNotAcceptEvents="false" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" MarginTop="60" LayoutImp.LayoutMethod="HorizontalLeftToRight">
               <Children>
                 <ButtonWidget DoNotPassEventsToChildren="true" Command.Click="ExecutePresetDefault" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="60" MarginBottom="3" HorizontalAlignment="Center" VerticalAlignment="Top" Brush="Header.Tab.Left">

@@ -10,6 +10,7 @@ using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Core;
+using AutoTrader.Warsails;
 
 namespace AutoTrader
 {
@@ -52,13 +53,39 @@ namespace AutoTrader
         }
         public float GetCurrentWeight()
         {
+            // Check if we should use fleet weight calculation
+            if (AutoTraderConfig.UseMaxFleetCapacityValue && WarsailsDetector.IsWarsailsDLCAvailable())
+            {
+                float fleetWeight = WarsailsHelper.GetFleetTotalWeightCarried(MobileParty.MainParty);
+                
+                if (fleetWeight > 0)
+                {
+                    AutoTraderHelpers.PrintDebugMessage(" - Using FleetTotalWeightCarried: " + fleetWeight.ToString());
+                    return fleetWeight;
+                }
+            }
+
+            // Fall back to regular weight calculation
             AutoTraderHelpers.PrintDebugMessage(" - CurrentWeight: " + MobileParty.MainParty.TotalWeightCarried.ToString());
             return MobileParty.MainParty.TotalWeightCarried;
         }
         public float GetInventoryCapacity()
         {
-            AutoTraderHelpers.PrintDebugMessage(" - InventoryCapacity: " + MobileParty.MainParty.InventoryCapacity.ToString());
-            return MobileParty.MainParty.InventoryCapacity;
+            // Check if we should use fleet capacity
+            if (AutoTraderConfig.UseMaxFleetCapacityValue && WarsailsDetector.IsWarsailsDLCAvailable())
+            {
+                int fleetCapacity = WarsailsHelper.GetFleetCargoCapacity(MobileParty.MainParty);
+                
+                if (fleetCapacity > 0)
+                {
+                    AutoTraderHelpers.PrintDebugMessage(" - Using FleetCargoCapacity: " + fleetCapacity.ToString());
+                    return fleetCapacity;
+                }
+            }
+
+            // Fall back to regular inventory capacity
+            AutoTraderHelpers.PrintDebugMessage(" - InventoryCapacity: " + PartyBase.MainParty.MobileParty.InventoryCapacity.ToString());
+            return PartyBase.MainParty.MobileParty.InventoryCapacity;
         }
         public int GetPlayerItemRosterSize()
         {
