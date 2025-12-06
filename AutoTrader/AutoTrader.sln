@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTrader", "src\AutoTrade
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other repository files", "Other repository files", "{84D27F74-D2BA-6C25-2661-968F101900D9}"
 	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
 		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
 		Directory.Build.props = Directory.Build.props
 		..\LICENSE.txt = ..\LICENSE.txt
