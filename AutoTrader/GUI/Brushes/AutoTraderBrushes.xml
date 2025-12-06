@@ -1,0 +1,12 @@
+<Brushes>
+  <Brush Name="AT.Divider" >
+    <Layers>
+      <BrushLayer Name="Default" Sprite="GradientDivider_9"/>
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default" AlphaFactor="0.9" Color="#FFEEDDFF" />
+      </Style>
+    </Styles>
+  </Brush>
+</Brushes>
