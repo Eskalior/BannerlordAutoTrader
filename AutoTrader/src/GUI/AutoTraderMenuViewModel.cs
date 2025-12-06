@@ -951,89 +951,215 @@ namespace AutoTrader
 			}
 		}
 
-		[DataSourceProperty]
-		public bool BuyHorsesValue
-		{
-			set;
-			get;
-		}
+        [DataSourceProperty]
+        public bool BuyHorsesValue
+        {
+            get
+            {
+                return this._buyHorsesValue;
+            }
+            set
+            {
+                if (value != this._buyHorsesValue)
+                {
+                    this._buyHorsesValue = value;
+                    base.OnPropertyChanged("BuyHorsesValue");
+                }
+            }
+        }
 
-		[DataSourceProperty]
-		public bool BuyWeaponsValue
-		{
-			set;
-			get;
-		}
+        [DataSourceProperty]
+        public bool BuyWeaponsValue
+        {
+            get
+            {
+                return this._buyWeaponsValue;
+            }
+            set
+            {
+                if (value != this._buyWeaponsValue)
+                {
+                    this._buyWeaponsValue = value;
+                    base.OnPropertyChanged("BuyWeaponsValue");
+                }
+            }
+        }
 
-		[DataSourceProperty]
-		public bool BuyArmorValue
-		{
-			set;
-			get;
-		}
+        [DataSourceProperty]
+        public bool BuyArmorValue
+        {
+            get
+            {
+                return this._buyArmorValue;
+            }
+            set
+            {
+                if (value != this._buyArmorValue)
+                {
+                    this._buyArmorValue = value;
+                    base.OnPropertyChanged("BuyArmorValue");
+                }
+            }
+        }
 
-		[DataSourceProperty]
-		public bool BuyGoodsValue
-		{
-			set;
-			get;
-		}
+        [DataSourceProperty]
+        public bool BuyGoodsValue
+        {
+            get
+            {
+                return this._buyGoodsValue;
+            }
+            set
+            {
+                if (value != this._buyGoodsValue)
+                {
+                    this._buyGoodsValue = value;
+                    if (!value)
+                        this.ResupplyHardwoodValue = false;
+                    base.OnPropertyChanged("BuyGoodsValue");
+                }
+            }
+        }
 
-		[DataSourceProperty]
-		public bool BuyConsumablesValue
-		{
-			set;
-			get;
-		}
+        [DataSourceProperty]
+        public bool BuyConsumablesValue
+        {
+            get
+            {
+                return this._buyConsumablesValue;
+            }
+            set
+            {
+                if (value != this._buyConsumablesValue)
+                {
+                    this._buyConsumablesValue = value;
+                    if (!value)
+                        this.ResupplyValue = false;
+                    base.OnPropertyChanged("BuyConsumablesValue");
+                }
+            }
+        }
 
-		[DataSourceProperty]
-		public bool BuyLivestockValue
-		{
-			set;
-			get;
-		}
+        [DataSourceProperty]
+        public bool BuyLivestockValue
+        {
+            get
+            {
+                return this._buyLivestockValue;
+            }
+            set
+            {
+                if (value != this._buyLivestockValue)
+                {
+                    this._buyLivestockValue = value;
+                    if (value)
+                        this.JunkCattleValue = false;
+                    base.OnPropertyChanged("BuyLivestockValue");
+                }
+            }
+        }
 
-		[DataSourceProperty]
-		public bool SellHorsesValue
-		{
-			set;
-			get;
-		}
+        [DataSourceProperty]
+        public bool SellHorsesValue
+        {
+            get
+            {
+                return this._sellHorsesValue;
+            }
+            set
+            {
+                if (value != this._sellHorsesValue)
+                {
+                    this._sellHorsesValue = value;
+                    base.OnPropertyChanged("SellHorsesValue");
+                }
+            }
+        }
 
-		[DataSourceProperty]
-		public bool SellWeaponsValue
-		{
-			set;
-			get;
-		}
+        [DataSourceProperty]
+        public bool SellWeaponsValue
+        {
+            get
+            {
+                return this._sellWeaponsValue;
+            }
+            set
+            {
+                if (value != this._sellWeaponsValue)
+                {
+                    this._sellWeaponsValue = value;
+                    base.OnPropertyChanged("SellWeaponsValue");
+                }
+            }
+        }
 
-		[DataSourceProperty]
-		public bool SellArmorValue
-		{
-			set;
-			get;
-		}
+        [DataSourceProperty]
+        public bool SellArmorValue
+        {
+            get
+            {
+                return this._sellArmorValue;
+            }
+            set
+            {
+                if (value != this._sellArmorValue)
+                {
+                    this._sellArmorValue = value;
+                    base.OnPropertyChanged("SellArmorValue");
+                }
+            }
+        }
 
-		[DataSourceProperty]
-		public bool SellGoodsValue
-		{
-			set;
-			get;
-		}
+        [DataSourceProperty]
+        public bool SellGoodsValue
+        {
+            get
+            {
+                return this._sellGoodsValue;
+            }
+            set
+            {
+                if (value != this._sellGoodsValue)
+                {
+                    this._sellGoodsValue = value;
+                    base.OnPropertyChanged("SellGoodsValue");
+                }
+            }
+        }
 
-		[DataSourceProperty]
-		public bool SellConsumablesValue
-		{
-			set;
-			get;
-		}
+        [DataSourceProperty]
+        public bool SellConsumablesValue
+        {
+            get
+            {
+                return this._sellConsumablesValue;
+            }
+            set
+            {
+                if (value != this._sellConsumablesValue)
+                {
+                    this._sellConsumablesValue = value;
+                    base.OnPropertyChanged("SellConsumablesValue");
+                }
+            }
+        }
 
-		[DataSourceProperty]
-		public bool SellLivestockValue
-		{
-			set;
-			get;
-		}
+        [DataSourceProperty]
+        public bool SellLivestockValue
+        {
+            get
+            {
+                return this._sellLivestockValue;
+            }
+            set
+            {
+                if (value != this._sellLivestockValue)
+                {
+                    this._sellLivestockValue = value;
+                    base.OnPropertyChanged("SellLivestockValue");
+                }
+            }
+        }
 
 		[DataSourceProperty]
 		public string KeepGrainsMinText
@@ -1227,7 +1353,7 @@ namespace AutoTrader
 			{
 				if (value != this._keepGrainsMinValueAsString)
 				{
-				this._keepGrainsMinValueAsString = value;
+					this._keepGrainsMinValueAsString = value;
 					base.OnPropertyChanged("KeepGrainsMinValueAsString");
 				}
 			}
