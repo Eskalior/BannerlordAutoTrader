@@ -1,0 +1,36 @@
+<Project>
+  <PropertyGroup>
+    <!-- 
+      This file contains centralized configuration for the AutoTrader mod project.
+      DO NOT commit paths.props.user - it contains user-specific paths.
+    -->
+  </PropertyGroup>
+
+  <!-- Import user-specific paths if the file exists -->
+  <Import Project="paths.props.user" Condition="Exists('paths.props.user')" />
+
+  <!-- Default fallback paths (try to detect Bannerlord installation) -->
+  <PropertyGroup Condition="'$(BannerlordPath)' == ''">
+    <!-- Try Steam default locations -->
+    <BannerlordPath Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord')">C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</BannerlordPath>
+    <BannerlordPath Condition="Exists('D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord')">D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord</BannerlordPath>
+    <BannerlordPath Condition="Exists('E:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord')">E:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord</BannerlordPath>
+    <BannerlordPath Condition="Exists('F:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord')">F:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord</BannerlordPath>
+  </PropertyGroup>
+
+  <!-- Derived paths from BannerlordPath -->
+  <PropertyGroup>
+    <BannerlordBinPath>$(BannerlordPath)\bin\Win64_Shipping_Client</BannerlordBinPath>
+    <BannerlordNativeModulePath>$(BannerlordPath)\Modules\Native\bin\Win64_Shipping_Client</BannerlordNativeModulePath>
+    <BannerlordModulesPath>$(BannerlordPath)\Modules</BannerlordModulesPath>
+    <BannerlordExePath>$(BannerlordPath)\bin\Win64_Shipping_Client\Bannerlord.exe</BannerlordExePath>
+  </PropertyGroup>
+
+  <!-- Validate paths -->
+  <Target Name="ValidateBannerlordPath" BeforeTargets="BeforeBuild">
+    <Error Condition="'$(BannerlordPath)' == ''" 
+           Text="Bannerlord installation path not found. Please create 'paths.props.user' and set BannerlordPath. See paths.props.user.template for an example." />
+    <Error Condition="!Exists('$(BannerlordBinPath)')" 
+           Text="Bannerlord bin directory not found at: $(BannerlordBinPath). Please verify your BannerlordPath in paths.props.user" />
+  </Target>
+</Project>

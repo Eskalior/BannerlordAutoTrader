@@ -3,9 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-# Additional
-*.csproj
-*.sln
+# Repo-specific files
+AutoTraderTests/       
+AssemblyInfo.cs
+packages.config
 
 # User-specific files
 *.rsuser
@@ -342,3 +343,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+# AutoTrader user-specific configuration
+paths.props.user

@@ -1,0 +1,22 @@
+<Project>
+  <!-- 
+    This file contains paths specific to your machine and must not be committed to Git.
+    Copy this file to 'paths.props.user' and update the paths below.
+  -->
+  
+  <PropertyGroup>
+    <!-- 
+      Set this to your Mount & Blade II Bannerlord installation directory.
+    -->
+    <BannerlordPath>C:\Path\To\Your\Mount &amp; Blade II Bannerlord</BannerlordPath>
+    
+    <!-- 
+      Optional: Override individual paths if needed
+      Usually you only need to set BannerlordPath above and these will be derived automatically.
+    -->
+    <!-- <BannerlordBinPath>$(BannerlordPath)\bin\Win64_Shipping_Client</BannerlordBinPath> -->
+    <!-- <BannerlordNativeModulePath>$(BannerlordPath)\Modules\Native\bin\Win64_Shipping_Client</BannerlordNativeModulePath> -->
+    <!-- <BannerlordModulesPath>$(BannerlordPath)\Modules</BannerlordModulesPath> -->
+    <!-- <BannerlordExePath>$(BannerlordPath)\bin\Win64_Shipping_Client\Bannerlord.exe</BannerlordExePath> -->
+  </PropertyGroup>
+</Project>
