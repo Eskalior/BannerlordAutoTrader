@@ -2,7 +2,7 @@
 <Module>
 	<Name value = "AutoTrader"/>
 	<Id value = "AutoTrader"/>
-	<Version value = "v1.3.9.2"/>
+	<Version value = "v1.3.9.3"/>
 	<SingleplayerModule value="true"/>
 	<MultiplayerModule value="false"/>
 	<Official value="false"/>

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.Core;
+using TaleWorlds.Localization;
 
 [assembly: InternalsVisibleTo("AutoTraderTests")]
 namespace AutoTrader
@@ -70,9 +72,30 @@ namespace AutoTrader
         private void UpdateAvailableInventoryCapacity()
         {
             float currentWeight = _logicConnector.GetCurrentWeight();
-            _availableInventoryCapacity = _logicConnector.GetInventoryCapacity() * ((float)AutoTraderConfig.UseInventorySpaceValue / 100.0f);
+            float inventoryCapacity = _logicConnector.GetInventoryCapacity();
+           
+            _availableInventoryCapacity = inventoryCapacity * ((float)AutoTraderConfig.UseInventorySpaceValue / 100.0f);
             _availableInventoryCapacity -= currentWeight;
             AutoTraderHelpers.PrintDebugMessage(" - actual availableInventoryCapacity: " + _availableInventoryCapacity.ToString());
+
+            // Catch some cases where the user got a wrong configuration.
+            if (AutoTraderConfig.UseMaxFleetCapacityValue && MobileParty.MainParty.Ships.Count <= 0)
+            {
+                AutoTraderHelpers.PrintMessage(new TextObject(
+                    "{=ATNoFleet}My Lord! Your traders are at a loss, you specifically asked them to load the wares on our ships but we have no fleet! " +
+                    "I instructed to load them on our carts but you may want to rethink your orders.").ToString()
+                );
+            }
+            else if (_availableInventoryCapacity < 0)
+            {
+                string msgBody = "{=ATNoInventorySpace}My Lord! We cannot fit any more goods into our inventory!";
+                if (AutoTraderConfig.UseMaxFleetCapacityValue)
+                {
+                    msgBody = "{=ATNoFleetSpace}My Lord! We cannot load more goods onto our fleet! Keep in mind that we need space for our herd.";
+                }
+
+                AutoTraderHelpers.PrintMessage(new TextObject(msgBody).ToString());
+            }
         }
 
         private void Sell()
