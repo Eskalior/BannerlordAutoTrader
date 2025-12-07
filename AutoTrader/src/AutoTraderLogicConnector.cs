@@ -1,4 +1,5 @@
-﻿using Helpers;
+﻿using AutoTrader.Warsails;
+using Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Core;
-using AutoTrader.Warsails;
+using TaleWorlds.Localization;
 
 namespace AutoTrader
 {
@@ -47,7 +48,6 @@ namespace AutoTrader
         public int GetTroopWage()
         {
             // ToDo: Whole daily wage
-            // TODO: Use "MobileParty" instead since 1.3?
             AutoTraderHelpers.PrintDebugMessage(" - TroopWage: " + PartyBase.MainParty.MobileParty.TotalWage.ToString());
             return PartyBase.MainParty.MobileParty.TotalWage;
         }
@@ -75,7 +75,7 @@ namespace AutoTrader
             if (AutoTraderConfig.UseMaxFleetCapacityValue && WarsailsDetector.IsWarsailsDLCAvailable())
             {
                 int fleetCapacity = WarsailsHelper.GetFleetCargoCapacity(MobileParty.MainParty);
-                
+
                 if (fleetCapacity > 0)
                 {
                     AutoTraderHelpers.PrintDebugMessage(" - Using FleetCargoCapacity: " + fleetCapacity.ToString());
@@ -83,15 +83,14 @@ namespace AutoTrader
                 }
             }
 
-            // Fall back to regular inventory capacity
+            // Use regular inventory capacity
             AutoTraderHelpers.PrintDebugMessage(" - InventoryCapacity: " + PartyBase.MainParty.MobileParty.InventoryCapacity.ToString());
             return PartyBase.MainParty.MobileParty.InventoryCapacity;
         }
         public int GetPlayerItemRosterSize()
         {
-            // TODO: Use "MobileParty" instead since 1.3?
             AutoTraderHelpers.PrintDebugMessage(" - PartyItemRosterSize: " + PartyBase.MainParty.ItemRoster.Count.ToString());
-            return PartyBase.MainParty.ItemRoster.Count;
+            return PartyBase.MainParty.MobileParty.ItemRoster.Count;
         }
         public int GetNumPartyMembers()
         {
@@ -101,9 +100,8 @@ namespace AutoTrader
         }
         public int GetNumLivestockAnimals()
         {
-            // TODO: Use "MobileParty" instead since 1.3?
             AutoTraderHelpers.PrintDebugMessage(" - NumLivestockAnimals: " + PartyBase.MainParty.ItemRoster.NumberOfLivestockAnimals.ToString());
-            return PartyBase.MainParty.ItemRoster.NumberOfLivestockAnimals;
+            return PartyBase.MainParty.MobileParty.ItemRoster.NumberOfLivestockAnimals;
         }
         public int GetMerchantItemRosterSize()
         {

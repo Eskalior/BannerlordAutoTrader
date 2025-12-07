@@ -158,7 +158,15 @@ namespace AutoTrader.Warsails
                     return 0;
                 }
 
-                float totalWeight = Convert.ToSingle(result);
+                var resultNumberProperty = result.GetType().GetProperty("ResultNumber");
+                if (resultNumberProperty == null)
+                {
+                    AutoTraderHelpers.PrintDebugMessage("WarsailsHelper: ResultNumber property not found");
+                    return 0;
+                }
+
+                var resultNumber = resultNumberProperty.GetValue(result);
+                float totalWeight = Convert.ToSingle(resultNumber);
                 
                 AutoTraderHelpers.PrintDebugMessage($"WarsailsHelper: Fleet total weight carried = {totalWeight}");
                 return totalWeight;

@@ -7,6 +7,10 @@ using TaleWorlds.Core;
 
 namespace AutoTrader
 {
+    /// <summary>
+    /// This interface allows to exchange the actual source that provides the data for the autotrading logic.
+    /// Initially this was done to make unittesting possible but right now it has only one implementation.
+    /// </summary>
     public interface ILogicConnector
     {
         bool IsCaravan { get; set; }

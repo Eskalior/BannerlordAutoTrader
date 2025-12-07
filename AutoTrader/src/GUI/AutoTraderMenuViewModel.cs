@@ -309,6 +309,7 @@ namespace AutoTrader
 			this.KeepConsumablesMinValue = 4.0f;
 			this.KeepConsumablesMaxValue = 20.0f;
 			this.UseInventorySpaceValue = 90.0f;
+			this.UseMaxFleetCapacityValue = false;
 			this.KeepWagesValue = 5.0f;
 			this.SearchRadiusValue = 300.0f;
 			this.WeaponsArmorTierValue = 2.0f;

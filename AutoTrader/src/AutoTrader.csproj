@@ -191,9 +191,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>GUI\%(RecursiveDir)%(Filename)%(Extension)</Link>
     </None>
-    <None Include="..\ModuleData\**\*.*">
+    <None Include="..\ModuleData\Languages\module_strings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>ModuleData\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <Link>ModuleData\Languages\module_strings.xml</Link>
     </None>
   </ItemGroup>
   <ItemGroup>

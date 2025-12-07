@@ -4,28 +4,58 @@
     <tag language="English" />
   </tags>
   <strings>
+    <string id="ATStartup01" text="Thanks for using AutoTrader! Press &lt;ALT + A" />
+    <string id="ATStartup02" text="&gt; to open the settings menu" />
+    <string id="ATVersionMismatch01" text="You are using AutoTrader for " />
+    <string id="ATVersionMismatch02" text=" with Bannerlord " />
+    <string id="ATVersionMismatch03" text=". If you encounter issues please check the mod page for a fitting version." />
+    <!---->
     <string id="ATTrade" text="Automatically trade wares" />
+    <string id="ATCaravan" text="I'd like to inspect your wares. (Autotrade)" />
     <!---->
     <string id="ATConfig" text="AutoTrader Options" />
     <string id="ATOptions" text="AutoTrader Configuration" />
-    <string id="ATLockHint" text="Note: Lock individual items in your inventory to keep them from being sold." />
+    <string id="ATLockHint" text="Lock items to prevent them from being sold." />
+    <string id="ATPresets" text="Presets" />
+    <string id="ATPreDefault" text="Default" />
+    <string id="ATPreSeller" text="Loot Seller" />
+    <string id="ATPreGlobal" text="Global Trade" />
+    <string id="ATPreLocal" text="Local Trade" />
     <!---->
+    <string id="ATHeaderBase" text="Basic Options" />
+    <string id="ATHeaderCustom" text="User Preferences" />
+    <string id="ATHeaderSpecial" text="Special Options" />
+    <string id="ATHeaderTrade" text="Buy / Sell Options" />
+    <!---->
+    <string id="ATShowAdvanced" text="Show advanced settings" />
+    <string id="ATSimpleAI" text="Green/red-based trading (improves with trade rumors)" />
+    <string id="ATWeightedRadius" text="Weight average price by distance" />
     <string id="ATBuyThreshold" text="Buy under % of the average price" />
     <string id="ATSellThreshold" text="Sell above % of the average price" />
     <string id="ATMaxCapacity" text="Maximum % of inventory filled by the same good" />
     <string id="ATUseMaxFleetCapacity" text="Use fleet capacity instead of inventory capacity" />
-    <string id="ATKeepGrains" text="Amount of grain to keep" />
-    <string id="ATKeepConsumables" text="Amount of each other consumable to keep" />
+    <string id="ATKeepGrainsMin" text="Minimum amount of grain to keep" />
+    <string id="ATKeepGrainsMax" text="Maximum amount of grain to keep" />
+    <string id="ATKeepConsumablesMin" text="Minimum amount of other consumables to keep" />
+    <string id="ATKeepConsumablesMax" text="Maximum amount of other consumables to keep" />
     <string id="ATUseInventorySpace" text="Total % of inventory space the mod may use" />
     <string id="ATKeepWages" text="Keep enough gold for X days of troop wages" />
-    <string id="ATSearchRadius" text="Average price search radius (advanced)" />
+    <string id="ATSearchRadius" text="Average price search radius" />
+    <string id="ATWeaponsArmorTier" text="Sell weapons and armor of tier X and below" />
     <!---->
+    <string id="ATAltAT" text="Use hotkey &lt;Alt + A + T&gt; instead of &lt;Alt + A&gt;" />
+    <string id="ATJunkCattle" text="Always sell all cattle" />
     <string id="ATSellSmithing" text="Sell charcoal and ingots" />
+    <string id="ATKeepSmelting" text="Keep smeltable weapons" />
+    <string id="ATResupplyHardwood" text="Resupply hardwood to 'resupply consumables' value" />
+    <string id="ATResupply" text="Resupply food to 'resupply consumables' value" />
+    <!---->
     <string id="ATTradeHorses" text="Trade Horses (buys only carry horses)" />
-    <string id="ATTradeWeapons" text="Trade Weapons (sells all unlocked)" />
-    <string id="ATTradeArmor" text="Trade Armor (sells all unlocked)" />
+    <string id="ATTradeWeapons" text="Trade Weapons (sells below Tier X)" />
+    <string id="ATTradeArmor" text="Trade Armor (sells below Tier X)" />
     <string id="ATTradeGoods" text="Trade Goods" />
     <string id="ATTradeConsumables" text="Trade Consumables" />
+    <string id="ATTradeLivestock" text="Trade Livestock (May cause herding)" />
     <!---->
     <string id="ATAll" text="All" />
     <string id="ATInf" text="Inf." />
@@ -35,5 +65,9 @@
     <string id="ATDefault" text="Default: " />
     <string id="ATDone" text="Done" />
     <string id="ATCancel" text="Cancel" />
+    <!---->
+    <string id="ATNoFleet" text="My Lord! Your traders are at a loss, you specifically asked them to load the wares on our ships but we have no fleet! I instructed to load them on our carts but you may want to rethink your orders." />
+    <string id="ATNoInventorySpace" text="My Lord! We cannot fit any more goods into our inventory!" />
+    <string id="ATNoFleetSpace" text="My Lord! We cannot load more goods onto our fleet! Keep in mind that we need space for our herd." />
   </strings>
 </base>
