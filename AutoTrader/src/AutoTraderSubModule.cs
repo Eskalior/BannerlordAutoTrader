@@ -35,10 +35,10 @@ namespace AutoTrader
 				+ new TextObject("{=ATStartup02}> to open the settings menu", null).ToString());
 
 			string fullVersion = ApplicationVersion.FromParametersFile(null).ToString();
-		string[] versionParts = fullVersion.Split('.');
-		string version = versionParts.Length >= 3 
-			? $"{versionParts[0]}.{versionParts[1]}.{versionParts[2]}" 
-			: fullVersion;
+			string[] versionParts = fullVersion.Split('.');
+			string version = versionParts.Length >= 3 
+				? $"{versionParts[0]}.{versionParts[1]}.{versionParts[2]}" 
+				: fullVersion;
 
 			if (!version.Equals(AutoTraderConfig.AutoTraderGameVersion)){
 				AutoTraderHelpers.PrintMessage(new TextObject("{=ATVersionMismatch01}You are using AutoTrader for ", null).ToString()
