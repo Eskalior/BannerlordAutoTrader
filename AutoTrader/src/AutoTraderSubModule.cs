@@ -34,7 +34,7 @@ namespace AutoTrader
 				+ t_text
 				+ new TextObject("{=ATStartup02}> to open the settings menu", null).ToString());
 
-			string version = ApplicationVersion.FromParametersFile(null).ToString().Substring(0, 6);
+			string version = ApplicationVersion.FromParametersFile(null).ToString().Substring(0, 7);
 
 			if (!version.Equals(AutoTraderConfig.AutoTraderGameVersion)){
 				AutoTraderHelpers.PrintMessage(new TextObject("{=ATVersionMismatch01}You are using AutoTrader for ", null).ToString()

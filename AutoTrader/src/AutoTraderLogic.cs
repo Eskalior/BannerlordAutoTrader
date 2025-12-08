@@ -86,16 +86,6 @@ namespace AutoTrader
                     "I instructed to load them on our carts but you may want to rethink your orders.").ToString()
                 );
             }
-            else if (_availableInventoryCapacity < 0)
-            {
-                string msgBody = "{=ATNoInventorySpace}My Lord! We cannot fit any more goods into our inventory!";
-                if (AutoTraderConfig.UseMaxFleetCapacityValue)
-                {
-                    msgBody = "{=ATNoFleetSpace}My Lord! We cannot load more goods onto our fleet! Keep in mind that we need space for our herd.";
-                }
-
-                AutoTraderHelpers.PrintMessage(new TextObject(msgBody).ToString());
-            }
         }
 
         private void Sell()
