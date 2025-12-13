@@ -562,10 +562,10 @@ namespace AutoTrader
                 AutoTraderHelpers.PrintDebugMessage("- do not buy because not enough stock");
                 return false;
             }
-                
 
-            // ToDo: Only for carry horses?
-            if (!_logicConnector.IsHorse() && _logicConnector.GetItemWeight() > _availableInventoryCapacity)
+
+            // ToDo: Only for carry horses? Nop, also for livestock.
+            if (!_logicConnector.IsHorse() && !_logicConnector.IsLivestock() && _logicConnector.GetItemWeight() > _availableInventoryCapacity)
             {
                 AutoTraderHelpers.PrintDebugMessage("- do not buy because not enough capacity: " + _logicConnector.GetItemWeight().ToString() + " > " + _availableInventoryCapacity.ToString());
                 return false;
