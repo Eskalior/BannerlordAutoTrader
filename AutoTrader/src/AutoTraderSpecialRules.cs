@@ -19,7 +19,7 @@ namespace AutoTrader
         // Cattle
         public static bool CheckBuyCattleCondition(ILogicConnector logicConnector)
         {
-            return AutoTraderConfig.BuyGoodsValue && logicConnector.IsLivestock();
+            return AutoTraderConfig.BuyLivestockValue && logicConnector.IsLivestock();
         }
 
         public static bool CheckBuyCattleRule(ILogicConnector logicConnector)
