@@ -410,11 +410,6 @@ namespace AutoTrader
             {
                 if (AutoTraderSpecialRules.CheckBuyCattleRule(_logicConnector))
                     return CheckBasicBuyRequirements(amount, buyoutPrice);
-                else
-                {
-                    AutoTraderHelpers.PrintDebugMessage("- do not buy because we need no more cattle");
-                    return false; // Don't buy more cattle   
-                }
             }
 
             // Check weight
