@@ -28,13 +28,15 @@ namespace AutoTrader
         }
 
         // Horses
+        public static bool CheckBuyHorsesCondition(ILogicConnector logicConnector)
+        {
+            return AutoTraderConfig.BuyHorsesValue && logicConnector.IsHorse();
+        }
+
         public static bool CheckBuyHorsesRules(ILogicConnector logicConnector, int buyoutPrice, int availablePlayerGold)
         {
-            if (logicConnector.IsPackAnimal() && AutoTraderConfig.BuyHorsesValue)
-            {
-                // Buy pack horses rule
-                if (logicConnector.GetNumPartyMembers() > logicConnector.GetNumLivestockAnimals() && buyoutPrice * 2 < availablePlayerGold)
-                    return true;
+            return !(logicConnector.GetHerdingPenalty() < 0);
+        }
 
                 // TODO: Add max herding setting
             }
