@@ -12,6 +12,7 @@ using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Core;
+using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
 namespace AutoTrader
@@ -99,6 +100,13 @@ namespace AutoTrader
             AutoTraderHelpers.PrintDebugMessage(" - NumPartyMembers: " + PartyBase.MainParty.NumberOfAllMembers.ToString());
             return PartyBase.MainParty.NumberOfAllMembers;
         }
+
+        public int GetNumInfantry()
+        {
+            AutoTraderHelpers.PrintDebugMessage(" - NumInfantry: " + PartyBase.MainParty.NumberOfMenWithoutHorse.ToString());
+            return PartyBase.MainParty.NumberOfMenWithoutHorse;
+        }
+
         public int GetNumLivestockAnimals()
         {
             AutoTraderHelpers.PrintDebugMessage(" - NumLivestockAnimals: " + PartyBase.MainParty.ItemRoster.NumberOfLivestockAnimals.ToString());
@@ -121,30 +129,52 @@ namespace AutoTrader
         {
             var model = Campaign.Current.Models.PartySpeedCalculatingModel;
 
-            MethodInfo method = model.GetType().GetMethod(
-                "GetHerdingModifier",
-                BindingFlags.Instance | BindingFlags.NonPublic
-            );
+            MethodInfo getHerdingModifierMethod =
+                model.GetType().GetMethod(
+                    "GetHerdingModifier",
+                    BindingFlags.Instance | BindingFlags.NonPublic
+                );
 
-            if (method == null)
+            if (getHerdingModifierMethod == null)
                 throw new InvalidOperationException("GetHerdingModifier not found");
-            int totalMenCount = GetNumPartyMembers();
-            int totalAnimalsCount = GetNumLivestockAnimals() + GetNumMounts() + GetNumOfPackAnimals();
-            if (_isBuying)
-                totalAnimalsCount++; // simulate buying one more animal
 
-            float herdingPenalty = (float)method.Invoke(
+            int totalMenCount = GetNumPartyMembers();
+            int infantryCount = GetNumInfantry();
+
+            int livestockCount = GetNumLivestockAnimals();
+            int packAnimalCount = GetNumOfPackAnimals();
+            int mountCount = GetNumMounts();
+
+            if (_isBuying)
+            {
+                if (IsLivestock())
+                    livestockCount++;
+                else if (IsPackAnimal())
+                    packAnimalCount++;
+                else
+                    mountCount++;
+            }
+            else {
+                if (!(IsLivestock() || IsPackAnimal()))
+                    mountCount--;
+            }
+
+            int mountedInfantry = MathF.Min(infantryCount, mountCount);
+
+            int herdSize =
+                livestockCount +
+                packAnimalCount +
+                MathF.Max(0, mountCount - mountedInfantry);
+
+            float herdingPenalty = (float)getHerdingModifierMethod.Invoke(
                 model,
-                new object[]
-                {
-            totalMenCount,
-            totalAnimalsCount
-                }
+                new object[] { totalMenCount, herdSize }
             );
 
             AutoTraderHelpers.PrintDebugMessage(
-                " - HerdingPenalty: " + herdingPenalty
+                $" - HerdingPenalty: {herdingPenalty}"
             );
+
             return herdingPenalty;
         }
 
