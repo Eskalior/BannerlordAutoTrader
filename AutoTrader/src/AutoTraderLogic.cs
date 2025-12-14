@@ -492,6 +492,9 @@ namespace AutoTrader
                     return CheckBasicSellRequirements(amount, buyoutPrice);
             }
 
+            if (AutoTraderSpecialRules.CheckSellHorsesCondition(_logicConnector) && (_logicConnector.GetHerdingPenalty() < 0))
+                return CheckBasicSellRequirements(amount, buyoutPrice);
+
             // Special hardwood rule
             if (AutoTraderSpecialRules.CheckBuyResupplyHardwoodRule(_logicConnector, amount))
             {
