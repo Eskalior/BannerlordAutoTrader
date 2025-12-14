@@ -338,16 +338,6 @@ namespace AutoTrader
             // Retrieve price
             buyoutPrice = _logicConnector.GetCostOfRosterElement();
 
-            // Special Rules
-            // Horses
-            if (_logicConnector.IsHorse())
-            {
-                if (AutoTraderSpecialRules.CheckBuyHorsesRules(_logicConnector, buyoutPrice, _availablePlayerGold))
-                    return CheckBasicBuyRequirements(amount, buyoutPrice);
-                AutoTraderHelpers.PrintDebugMessage(" - do not buy because we need no additional horses");
-                return false; // buy no other horses
-            }
-
             // Hardwood
             if (AutoTraderSpecialRules.CheckBuyResupplyHardwoodRule(_logicConnector, amount))
             {
@@ -409,6 +399,13 @@ namespace AutoTrader
             if (AutoTraderSpecialRules.CheckBuyCattleCondition(_logicConnector))
             {
                 if (AutoTraderSpecialRules.CheckBuyCattleRule(_logicConnector))
+                    return CheckBasicBuyRequirements(amount, buyoutPrice);
+            }
+
+            // Horses
+            if (AutoTraderSpecialRules.CheckBuyHorsesCondition(_logicConnector))
+            {
+                if (AutoTraderSpecialRules.CheckBuyHorsesRules(_logicConnector, buyoutPrice, _availablePlayerGold))
                     return CheckBasicBuyRequirements(amount, buyoutPrice);
             }
 
