@@ -220,6 +220,35 @@ namespace AutoTrader
             AutoTraderHelpers.PrintDebugMessage(" - IsPackAnimal: " + result.ToString());
             return result;
         }
+
+        public bool IsNormalHorse()
+        {
+            var result = _currentItemRosterElement.EquipmentElement.Item.ItemCategory.StringId == "horse";
+            AutoTraderHelpers.PrintDebugMessage(" - IsNormalHorse: " + result.ToString());
+            return result;
+        }
+
+        public bool IsWarHorse()
+        {
+            var result = _currentItemRosterElement.EquipmentElement.Item.ItemCategory.StringId == "war_horse";
+            AutoTraderHelpers.PrintDebugMessage(" - IsWarHorse: " + result.ToString());
+            return result;
+        }
+
+        public bool IsNobleHorse()
+        {
+            var result = _currentItemRosterElement.EquipmentElement.Item.ItemCategory.StringId== "noble_horse";
+            AutoTraderHelpers.PrintDebugMessage(" - IsNobleHorse: " + result.ToString());
+            return result;
+        }
+
+        public bool IsCamel()
+        {
+            var result = _currentItemRosterElement.EquipmentElement.Item.ItemCategory.StringId == "camel";
+            AutoTraderHelpers.PrintDebugMessage(" - IsCamel: " + result.ToString());
+            return result;
+        }
+
         public bool IsItemGrain()
         {
             var result = _currentItemRosterElement.EquipmentElement.Item == DefaultItems.Grain;

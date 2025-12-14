@@ -39,6 +39,10 @@ namespace AutoTrader
         float GetItemWeight();
         bool IsWeaponDesignEmpty();
         bool IsPackAnimal();
+        bool IsNormalHorse();
+        bool IsWarHorse();
+        bool IsNobleHorse();
+        bool IsCamel();
         bool IsItemGrain();
         bool IsItemHardwood();
         int GetPartyHardwoodIndex();
