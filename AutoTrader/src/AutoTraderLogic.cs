@@ -493,8 +493,8 @@ namespace AutoTrader
             // Livestock
             if (_logicConnector.IsLivestock())
             {
-                // Sell if its treated as junk
-                if (AutoTraderConfig.JunkCattleValue)
+                // Sell if its treated as junk or herding
+                if (AutoTraderConfig.JunkCattleValue || (_logicConnector.GetHerdingPenalty()<0))
                     return CheckBasicSellRequirements(amount, buyoutPrice);
             }
 
