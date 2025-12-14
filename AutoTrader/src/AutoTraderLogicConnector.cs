@@ -299,10 +299,6 @@ namespace AutoTrader
             if (doneItems != null && doneItems.Exists(x => x == itemRosterElement.EquipmentElement.Item.Name.ToString()))
                 return true;
 
-            // Exclude horses when buying for now
-            if (AutoTraderHelpers.IsHorse(itemObject) && _isBuying)
-                return true;
-
             // Filter by type
             if (!_isBuying && AutoTraderHelpers.IsSmithingMaterial(itemObject))
             {
