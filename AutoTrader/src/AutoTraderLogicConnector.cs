@@ -3,6 +3,7 @@ using Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.CampaignSystem;
@@ -103,6 +104,50 @@ namespace AutoTrader
             AutoTraderHelpers.PrintDebugMessage(" - NumLivestockAnimals: " + PartyBase.MainParty.ItemRoster.NumberOfLivestockAnimals.ToString());
             return PartyBase.MainParty.MobileParty.ItemRoster.NumberOfLivestockAnimals;
         }
+
+        public int GetNumMounts()
+        {
+            AutoTraderHelpers.PrintDebugMessage(" - NumMounts: " + PartyBase.MainParty.ItemRoster.NumberOfMounts.ToString());
+            return PartyBase.MainParty.MobileParty.ItemRoster.NumberOfMounts;
+        }
+
+        public int GetNumOfPackAnimals()
+        {
+            AutoTraderHelpers.PrintDebugMessage(" - NumOfPackAnimals: " + PartyBase.MainParty.ItemRoster.NumberOfPackAnimals.ToString());
+            return PartyBase.MainParty.MobileParty.ItemRoster.NumberOfPackAnimals;
+        }
+
+        public float GetHerdingPenalty()
+        {
+            var model = Campaign.Current.Models.PartySpeedCalculatingModel;
+
+            MethodInfo method = model.GetType().GetMethod(
+                "GetHerdingModifier",
+                BindingFlags.Instance | BindingFlags.NonPublic
+            );
+
+            if (method == null)
+                throw new InvalidOperationException("GetHerdingModifier not found");
+            int totalMenCount = GetNumPartyMembers();
+            int totalAnimalsCount = GetNumLivestockAnimals() + GetNumMounts() + GetNumOfPackAnimals();
+            if (_isBuying)
+                totalAnimalsCount++; // simulate buying one more animal
+
+            float herdingPenalty = (float)method.Invoke(
+                model,
+                new object[]
+                {
+            totalMenCount,
+            totalAnimalsCount
+                }
+            );
+
+            AutoTraderHelpers.PrintDebugMessage(
+                " - HerdingPenalty: " + herdingPenalty
+            );
+            return herdingPenalty;
+        }
+
         public int GetMerchantItemRosterSize()
         {
             if (_isCaravan)
