@@ -33,7 +33,7 @@ namespace AutoTrader
             return AutoTraderConfig.BuyHorsesValue && logicConnector.IsHorse();
         }
 
-        public static bool CheckBuyHorsesRules(ILogicConnector logicConnector, int buyoutPrice, int availablePlayerGold)
+        public static bool CheckBuyHorsesRules(ILogicConnector logicConnector)
         {
             return !(logicConnector.GetHerdingPenalty() < 0);
         }
