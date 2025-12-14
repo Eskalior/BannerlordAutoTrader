@@ -24,7 +24,7 @@ namespace AutoTrader
 
         public static bool CheckBuyCattleRule(ILogicConnector logicConnector)
         {
-            return logicConnector.GetNumPartyMembers() >= logicConnector.GetNumLivestockAnimals();
+            return !(logicConnector.GetHerdingPenalty() < 0);
         }
 
         // Horses
