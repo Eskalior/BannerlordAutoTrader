@@ -458,13 +458,10 @@ namespace AutoTrader
             }
                 
             // Special horse rule
-            if (_logicConnector.IsHorse())
+            if (AutoTraderSpecialRules.CheckSellHorsesCondition(_logicConnector))
             {
-                if (_logicConnector.IsPackAnimal() && AutoTraderConfig.SellHorsesValue)
-                {
-                    AutoTraderHelpers.PrintDebugMessage("- do not sell because its a pack animal");
+                if (!AutoTraderSpecialRules.CheckSellHorsesRules(_logicConnector))
                     return false;
-                }
             }
 
             // Check amounts to keep
