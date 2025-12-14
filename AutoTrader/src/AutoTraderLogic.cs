@@ -395,18 +395,17 @@ namespace AutoTrader
             }
 
             // Specials rules after price check
-            // Check if we have enough cattle
             if (AutoTraderSpecialRules.CheckBuyCattleCondition(_logicConnector))
             {
-                if (AutoTraderSpecialRules.CheckBuyCattleRule(_logicConnector))
-                    return CheckBasicBuyRequirements(amount, buyoutPrice);
+                if (!AutoTraderSpecialRules.CheckBuyCattleRule(_logicConnector))
+                    return false;
             }
 
             // Horses
             if (AutoTraderSpecialRules.CheckBuyHorsesCondition(_logicConnector))
             {
-                if (AutoTraderSpecialRules.CheckBuyHorsesRules(_logicConnector, buyoutPrice, _availablePlayerGold))
-                    return CheckBasicBuyRequirements(amount, buyoutPrice);
+                if (!AutoTraderSpecialRules.CheckBuyHorsesRules(_logicConnector))
+                    return false;
             }
 
             // Check weight
