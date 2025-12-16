@@ -19,6 +19,7 @@ namespace AutoTrader
         void SetCurrentElementById(int itemId);
         void SetCurrentElementByName(string itemName);
         int GetInitialGold();
+        bool IsPartyAtSea();
         int GetTroopWage();
         float GetCurrentWeight();
         float GetInventoryCapacity();
