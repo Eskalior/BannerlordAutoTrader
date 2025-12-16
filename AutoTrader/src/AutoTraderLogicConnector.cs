@@ -362,8 +362,10 @@ namespace AutoTrader
         }
         public float GetItemWeight()
         {
-            AutoTraderHelpers.PrintDebugMessage(" - ItemWeight: " + _currentItemRosterElement.EquipmentElement.Item.Weight.ToString());
-            return _currentItemRosterElement.EquipmentElement.Item.Weight;
+            EnsureInitialized();
+            float itemWeight = _cachedInventoryCapacityModel.GetItemEffectiveWeight(_currentItemRosterElement.EquipmentElement, PartyBase.MainParty.MobileParty, IsPartyAtSea(), out _);
+            AutoTraderHelpers.PrintDebugMessage(" - ItemWeight: " + itemWeight.ToString());
+            return itemWeight;
         }
 
         public bool IsWeaponDesignEmpty()
