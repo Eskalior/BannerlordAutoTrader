@@ -173,6 +173,12 @@ namespace AutoTrader
             AutoTraderHelpers.PrintDebugMessage(" - InitialGold: " + PartyBase.MainParty.Owner.Gold.ToString());
             return PartyBase.MainParty.Owner.Gold;
         }
+
+        public bool IsPartyAtSea() {
+            AutoTraderHelpers.PrintDebugMessage(" - PartyAtSea: " + PartyBase.MainParty.MobileParty.IsCurrentlyAtSea.ToString());
+            return PartyBase.MainParty.MobileParty.IsCurrentlyAtSea;
+        }
+
         public int GetTroopWage()
         {
             // ToDo: Whole daily wage
