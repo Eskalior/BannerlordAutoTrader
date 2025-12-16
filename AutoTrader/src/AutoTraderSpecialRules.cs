@@ -45,17 +45,19 @@ namespace AutoTrader
 
         public static bool CheckSellHorsesRules(ILogicConnector logicConnector)
         {
-            float currentWeight = logicConnector.GetCurrentWeight();
-            float inventoryCapacity = logicConnector.GetInventoryCapacity();
-            if (logicConnector.IsPackAnimal() && currentWeight > inventoryCapacity - 100)
-            {//cant find horses carry capacity in code but is 100 for carry horses and 20 for nomral horses
-                AutoTraderHelpers.PrintDebugMessage("- do not sell: this pack animal is needed to maintain carrying capacity");
-                return false;
-            }
-            else if (currentWeight > inventoryCapacity - 20)
-            {
-                AutoTraderHelpers.PrintDebugMessage("- do not sell: this horse is needed to maintain carrying capacity");
-                return false;
+            if (!logicConnector.IsPartyAtSea() && !AutoTraderConfig.UseMaxFleetCapacityValue) {
+                float currentWeight = logicConnector.GetCurrentWeight();
+                float inventoryCapacity = logicConnector.GetInventoryCapacity();
+                if (logicConnector.IsPackAnimal() && currentWeight > inventoryCapacity - 100)
+                {//cant find horses carry capacity in code but is 100 for carry horses and 20 for nomral horses
+                    AutoTraderHelpers.PrintDebugMessage("- do not sell: this pack animal is needed to maintain carrying capacity");
+                    return false;
+                }
+                else if (currentWeight > inventoryCapacity - 20)
+                {
+                    AutoTraderHelpers.PrintDebugMessage("- do not sell: this horse is needed to maintain carrying capacity");
+                    return false;
+                }
             }
             return true;
         }
