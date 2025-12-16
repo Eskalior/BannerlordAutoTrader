@@ -471,7 +471,7 @@ namespace AutoTrader
                 int minAmountToKeep = _logicConnector.IsItemGrain() ?
                     AutoTraderConfig.KeepGrainsMinValue : AutoTraderConfig.KeepConsumablesMinValue;
 
-                if (minAmountToKeep > amount)
+                if (minAmountToKeep >= amount)
                 {
                     AutoTraderHelpers.PrintDebugMessage("- do not sell because we dont have enough of this consumable");
                     return false;
