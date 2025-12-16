@@ -9,7 +9,7 @@ namespace AutoTrader
             // Checks if we have the item too often
             var rosterWeight = logicConnector.GetItemWeight() * amount;
             AutoTraderHelpers.PrintDebugMessage("- weight in roster: " + rosterWeight.ToString());
-            if (!logicConnector.IsHorse() && !logicConnector.IsLivestock() && rosterWeight >= (float)baseCapacity * ((float)AutoTraderConfig.MaxCapacityValue / 100f))
+            if (rosterWeight >= (float)baseCapacity * ((float)AutoTraderConfig.MaxCapacityValue / 100f))
             {
                 return false;
             }
