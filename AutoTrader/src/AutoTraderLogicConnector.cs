@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.ComponentInterfaces;
 using TaleWorlds.CampaignSystem.Inventory;
 using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Roster;
@@ -19,9 +20,134 @@ namespace AutoTrader
 {
     class AutoTraderLogicConnector: ILogicConnector
     {
-
         public bool _isCaravan = false;
         public bool _isBuying = false;
+
+        private static bool _isInitialized;
+        private static Func<int, int, float> _getHerdingModifierDelegate;
+        private static InventoryCapacityModel _cachedInventoryCapacityModel;
+
+        private static PartySpeedModel FindHerdingModel(PartySpeedModel rootModel)
+        {
+            PartySpeedModel current = rootModel;
+
+            var baseModelProperty = typeof(PartySpeedModel).GetProperty(
+                "BaseModel",
+                BindingFlags.Instance | BindingFlags.NonPublic
+            );
+
+            if (baseModelProperty == null)
+            {
+                AutoTraderHelpers.PrintDebugMessage(
+                    " -  PartySpeedModel has no BaseModel property"
+                );
+                return null;
+            }
+
+            int depth = 0;
+            const int MaxDepth = 10;
+
+            while (current != null && depth++ < MaxDepth)
+            {
+                Type type = current.GetType();
+
+                MethodInfo herdingMethod = type.GetMethod(
+                    "GetHerdingModifier",
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly
+                );
+
+                if (herdingMethod != null)
+                {
+                    AutoTraderHelpers.PrintDebugMessage(
+                        $" - Herding model found: {type.FullName}"
+                    );
+                    return current;
+                }
+
+                var next = baseModelProperty.GetValue(current) as PartySpeedModel;
+
+                if (next == null || ReferenceEquals(next, current))
+                {
+                    AutoTraderHelpers.PrintDebugMessage(
+                        $" - Reached end of PartySpeedModel chain at {type.FullName}"
+                    );
+                    return null;
+                }
+
+                AutoTraderHelpers.PrintDebugMessage(
+                    $" - Skipping PartySpeedModel: {type.FullName}"
+                );
+
+                current = next;
+            }
+
+            AutoTraderHelpers.PrintDebugMessage(
+                " - Herding model not found in PartySpeedModel chain"
+            );
+
+            return null;
+        }
+
+        private static void EnsureInitialized()
+        {
+            if (_isInitialized)
+                return;
+
+            try
+            {
+                var models = Campaign.Current?.Models;
+                if (models == null)
+                    return;
+
+                PartySpeedModel rootModel =
+                    models.PartySpeedCalculatingModel;
+
+                if (rootModel == null)
+                    return;
+
+                AutoTraderHelpers.PrintDebugMessage(
+                    $" - Root PartySpeedModel: {rootModel.GetType().FullName}"
+                );
+
+                PartySpeedModel herdingModel =
+                    FindHerdingModel(rootModel);
+
+                if (herdingModel == null)
+                {
+                    AutoTraderHelpers.PrintDebugMessage(
+                        " - No PartySpeedModel implements GetHerdingModifier"
+                    );
+                    return;
+                }
+
+                MethodInfo herdingMethod =
+                    herdingModel.GetType().GetMethod(
+                        "GetHerdingModifier",
+                        BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly
+                    );
+
+                _getHerdingModifierDelegate =
+                    (Func<int, int, float>)herdingMethod.CreateDelegate(
+                        typeof(Func<int, int, float>),
+                        herdingModel
+                    );
+
+                _cachedInventoryCapacityModel =
+                    models.InventoryCapacityModel;
+
+                _isInitialized = true;
+
+                AutoTraderHelpers.PrintDebugMessage(
+                    " - Herding modifier initialized"
+                );
+            }
+            catch (Exception ex)
+            {
+                AutoTraderHelpers.PrintDebugMessage(
+                    $" - Herding initialization failed:\n{ex}"
+                );
+            }
+        }
 
         private ItemRosterElement _currentItemRosterElement;
 
@@ -127,16 +253,13 @@ namespace AutoTrader
 
         public float GetHerdingPenalty()
         {
-            var model = Campaign.Current.Models.PartySpeedCalculatingModel;
+            if (PartyBase.MainParty.MobileParty.IsCurrentlyAtSea || AutoTraderConfig.UseMaxFleetCapacityValue)
+                return 0f;
 
-            MethodInfo getHerdingModifierMethod =
-                model.GetType().GetMethod(
-                    "GetHerdingModifier",
-                    BindingFlags.Instance | BindingFlags.NonPublic
-                );
+            EnsureInitialized();
 
-            if (getHerdingModifierMethod == null)
-                throw new InvalidOperationException("GetHerdingModifier not found");
+            if (!_isInitialized || _getHerdingModifierDelegate == null)
+                return 0f;
 
             int totalMenCount = GetNumPartyMembers();
             int infantryCount = GetNumInfantry();
@@ -154,7 +277,8 @@ namespace AutoTrader
                 else
                     mountCount++;
             }
-            else {
+            else
+            {
                 if (!(IsLivestock() || IsPackAnimal()))
                     mountCount--;
             }
@@ -166,10 +290,8 @@ namespace AutoTrader
                 packAnimalCount +
                 MathF.Max(0, mountCount - mountedInfantry);
 
-            float herdingPenalty = (float)getHerdingModifierMethod.Invoke(
-                model,
-                new object[] { totalMenCount, herdSize }
-            );
+            float herdingPenalty =
+                _getHerdingModifierDelegate(totalMenCount, herdSize);
 
             AutoTraderHelpers.PrintDebugMessage(
                 $" - HerdingPenalty: {herdingPenalty}"
