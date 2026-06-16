@@ -62,16 +62,18 @@ namespace AutoTrader
 
 		protected override void OnApplicationTick(float dt)
 		{
-			if(Game.Current != null && !_autoTraderLogic.IsTradingActive)
+			if (Game.Current != null)
 			{
-				if(Input.IsKeyDown(InputKey.LeftAlt) 
-					&& Input.IsKeyDown(InputKey.A) 
+				_autoTraderLogic.OnApplicationTick();
+
+				if (!_autoTraderLogic.IsTradingActive
+					&& Input.IsKeyDown(InputKey.LeftAlt)
+					&& Input.IsKeyDown(InputKey.A)
 					&& (!AutoTraderConfig.UseAltATValue || Input.IsKeyDown(InputKey.T))
 					&& Game.Current.GameStateManager.ActiveState.GetType() == typeof(MapState)
 					&& Game.Current.GameStateManager.ActiveState.IsMenuState == false
-					&& Game.Current.GameStateManager.ActiveState.GetType() != typeof(MissionState)
-					)
-                {
+					&& Game.Current.GameStateManager.ActiveState.GetType() != typeof(MissionState))
+				{
 					OpenSettingsMenu();
 				}
 			}

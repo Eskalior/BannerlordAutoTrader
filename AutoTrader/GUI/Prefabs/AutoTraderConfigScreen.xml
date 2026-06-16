@@ -1,6 +1,6 @@
 <Prefab>
   <Constants>
-    <Constant Name="AT.MainWindow.MarginTop" Value="160" />
+    <Constant Name="AT.MainWindow.MarginTop" Value="188" />
     <Constant Name="AT.MainWindow.MarginLeft" Value="50" />
     <Constant Name="AT.MainWindow.MarginBottom" Value="60" />
     <Constant Name="AT.MainWindow.MarginRight" Value="0" />
@@ -25,6 +25,14 @@
     <Constant Name="AT.Heading.Divider.Width" Value="500" />
 
   </Constants>
+  <VisualDefinitions>
+    <VisualDefinition Name="TopPanel" EaseType="EaseOut" EaseFunction="Quint" TransitionDuration="0.45">
+      <VisualState PositionYOffset="0" State="Default" />
+    </VisualDefinition>
+    <VisualDefinition Name="BottomMenu" EaseType="EaseOut" EaseFunction="Quint" TransitionDuration="0.45">
+      <VisualState PositionYOffset="0" State="Default" />
+    </VisualDefinition>
+  </VisualDefinitions>
   <!-- Main window -->
   <Window>
     <Widget Id="AutoTraderScreen" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
@@ -35,26 +43,26 @@
         <!-- Left and Right container -->
         <ListPanel Id="MainSectionListPanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" 
                    HorizontalAlignment="Center" MarginTop="!AT.MainWindow.MarginTop" MarginBottom="!AT.MainWindow.MarginBottom" 
-                   MarginLeft="!AT.MainWindow.MarginLeft" MarginRight="!AT.MainWindow.MarginRight" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                   MarginLeft="!AT.MainWindow.MarginLeft" MarginRight="!AT.MainWindow.MarginRight" StackLayout.LayoutMethod="HorizontalLeftToRight">
           <Children>
             <!-- Left -->
             <ListPanel Id="MainSectionListPanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top">
               <Children>
 
                 <!-- List top to down -->
-                <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" LayoutImp.LayoutMethod="VerticalBottomToTop">
+                <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" StackLayout.LayoutMethod="VerticalTopToBottom">
                   <Children>
                     
                     <!-- Divider with Header-->
-                    <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" LayoutImp.LayoutMethod="VerticalTopToBottom">
+                    <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" StackLayout.LayoutMethod="VerticalTopToBottom">
                       <Children>
-                      <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!AT.Heading.Divider.Width" SuggestedHeight="2" VerticalAlignment="Top" HorizontalAlignment="Center" MarginTop="-6" MarginBottom="!AT.Heading.MarginBottom" Brush="AT.Divider" />
-                      <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginTop="!AT.Heading.MarginTop" Text="@HeaderBaseText" />
+                      <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" Text="@HeaderBaseText" />
+                      <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!AT.Heading.Divider.Width" SuggestedHeight="2" HorizontalAlignment="Center" MarginTop="8" MarginBottom="!AT.Heading.MarginBottom" Brush="AT.Divider" />
                       </Children>
                     </ListPanel>
 
                     <!-- Use simple AI -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@SimpleAIText" />
@@ -73,7 +81,7 @@
                     </ListPanel>
 
                     <!-- Buy under -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight" IsVisible="@IsWeightedActive">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight" IsVisible="@IsWeightedActive">
                       <Children>
 
                         <!-- Desc -->
@@ -109,7 +117,7 @@
                     </ListPanel>
 
                     <!-- Sell above -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight" IsVisible="@IsWeightedActive">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight" IsVisible="@IsWeightedActive">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@SellThresholdText" />
@@ -143,7 +151,7 @@
                     </ListPanel>
 
                     <!-- Use weighted radius -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight" IsVisible="@IsWeightedActive">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight" IsVisible="@IsWeightedActive">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@UseWeightedText" />
@@ -162,7 +170,7 @@
                     </ListPanel>
 
                     <!-- Average price search radius -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight" IsVisible="@IsSearchRadiusActive">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight" IsVisible="@IsSearchRadiusActive">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@SearchRadiusText" />
@@ -196,16 +204,16 @@
                     </ListPanel>
 
                     <!-- Divider with Header-->
-                    <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" LayoutImp.LayoutMethod="VerticalTopToBottom">
+                    <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" StackLayout.LayoutMethod="VerticalTopToBottom" MarginTop="!AT.Heading.MarginTop">
                       <Children>
-                      <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!AT.Heading.Divider.Width" SuggestedHeight="2" VerticalAlignment="Top" HorizontalAlignment="Center" MarginTop="-6" MarginBottom="!AT.Heading.MarginBottom" Brush="AT.Divider" />
-                      <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginTop="!AT.Heading.MarginTop" Text="@HeaderCustomText" />
+                      <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" Text="@HeaderCustomText" />
+                      <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!AT.Heading.Divider.Width" SuggestedHeight="2" HorizontalAlignment="Center" MarginTop="8" MarginBottom="!AT.Heading.MarginBottom" Brush="AT.Divider" />
                       </Children>
                     </ListPanel>
 
                     <!-- Preferences -->
                     <!-- Inventory space -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@UseInventorySpaceText" />
@@ -239,7 +247,7 @@
                     </ListPanel>
 
                     <!-- Use max fleet capacity -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight" IsVisible="@IsFleetCapacityVisible">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight" IsVisible="@IsFleetCapacityVisible">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@UseMaxFleetCapacityText" />
@@ -258,7 +266,7 @@
                     </ListPanel>
 
                     <!-- Filled by same good -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@MaxCapacityText" />
@@ -292,7 +300,7 @@
                     </ListPanel>
 
                     <!-- Minimum grain to keep -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@KeepGrainsMinText" />
@@ -326,7 +334,7 @@
                     </ListPanel>
 
                     <!-- Maximum grain to keep -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@KeepGrainsMaxText" />
@@ -360,7 +368,7 @@
                     </ListPanel>
 
                     <!-- Minimum consumables to keep -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@KeepConsumablesMinText" />
@@ -394,7 +402,7 @@
                     </ListPanel>
 
                     <!-- Maximum consumables to keep -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@KeepConsumablesMaxText" />
@@ -428,7 +436,7 @@
                     </ListPanel>
 
                     <!-- Wages to keep -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@KeepWagesText" />
@@ -462,7 +470,7 @@
                     </ListPanel>
 
                     <!-- Sell weapons and armor -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@WeaponsArmorTierText" />
@@ -504,18 +512,18 @@
             <!-- Right -->
             <ListPanel Id="MainSectionListPanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="150" HorizontalAlignment="Right" VerticalAlignment="Top">
               <Children>
-                <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Right" VerticalAlignment="Top" LayoutImp.LayoutMethod="VerticalBottomToTop">
+                <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Right" VerticalAlignment="Top" StackLayout.LayoutMethod="VerticalTopToBottom">
                   <Children>
 
                     <!-- Divider with Header-->
-                    <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" LayoutImp.LayoutMethod="VerticalTopToBottom">
+                    <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" StackLayout.LayoutMethod="VerticalTopToBottom" MarginTop="!AT.Heading.MarginTop">
                       <Children>
-                        <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!AT.Heading.Divider.Width" SuggestedHeight="2" VerticalAlignment="Top" HorizontalAlignment="Center" MarginTop="-6" MarginBottom="!AT.Heading.MarginBottom" Brush="AT.Divider" />
-                        <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginTop="!AT.Heading.MarginTop" Text="@HeaderTradeText" />
+                        <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" Text="@HeaderTradeText" />
+                        <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!AT.Heading.Divider.Width" SuggestedHeight="2" HorizontalAlignment="Center" MarginTop="8" MarginBottom="!AT.Heading.MarginBottom" Brush="AT.Divider" />
                       </Children>
                     </ListPanel>
 
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="" />
@@ -526,7 +534,7 @@
                     </ListPanel>
 
                     <!-- Horses -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight" >
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight" >
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@TradeHorsesText" />
@@ -555,7 +563,7 @@
                     </ListPanel>
 
                     <!-- Armor -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight" >
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight" >
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@TradeArmorText" />
@@ -584,7 +592,7 @@
                     </ListPanel>
 
                     <!-- Weapons -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight" >
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight" >
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@TradeWeaponsText" />
@@ -612,7 +620,7 @@
                       </Children>
                     </ListPanel>
 
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@TradeGoodsText" />
@@ -640,7 +648,7 @@
                       </Children>
                     </ListPanel>
 
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@TradeConsumablesText" />
@@ -669,7 +677,7 @@
                     </ListPanel>
 
                     <!-- Livestock -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@TradeLivestockText" />
@@ -698,15 +706,15 @@
                     </ListPanel>
 
                     <!-- Divider with Header-->
-                    <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" LayoutImp.LayoutMethod="VerticalTopToBottom" IsVisible="true">
+                    <ListPanel Id="OuterList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Top" StackLayout.LayoutMethod="VerticalTopToBottom" MarginTop="!AT.Heading.MarginTop" IsVisible="true">
                       <Children>
-                        <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!AT.Heading.Divider.Width" SuggestedHeight="2" VerticalAlignment="Top" HorizontalAlignment="Center" MarginTop="-6" MarginBottom="!AT.Heading.MarginBottom" Brush="AT.Divider" />
-                        <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginTop="!AT.Heading.MarginTop" Text="@HeaderSpecialText" />
+                        <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" Text="@HeaderSpecialText" />
+                        <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!AT.Heading.Divider.Width" SuggestedHeight="2" HorizontalAlignment="Center" MarginTop="8" MarginBottom="!AT.Heading.MarginBottom" Brush="AT.Divider" />
                       </Children>
                     </ListPanel>
 
                     <!-- Use Alt + A + T -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight" >
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight" >
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@UseAltATText" />
@@ -725,7 +733,7 @@
                     </ListPanel>
 
                     <!-- Junk cattle -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight" >
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight" >
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@JunkCattleText" />
@@ -744,7 +752,7 @@
                     </ListPanel>
 
                     <!-- Sell smithing -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight" >
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight" >
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@SellSmithingText" />
@@ -763,7 +771,7 @@
                     </ListPanel>
 
                     <!-- Keep smelting -->
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight" >
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight" >
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@KeepSmeltingText" />
@@ -781,7 +789,7 @@
                       </Children>
                     </ListPanel>
 
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight" >
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight" >
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@ResupplyHardwoodText" />
@@ -799,7 +807,7 @@
                       </Children>
                     </ListPanel>
 
-                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" LayoutImp.LayoutMethod="HorizontalLeftToRight" >
+                    <ListPanel Id="ListPanel" DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="!AT.Check.Height" StackLayout.LayoutMethod="HorizontalLeftToRight" >
                       <Children>
 
                         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!AT.Slider.Desc.Width" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.OptionName.Text" Text="@ResupplyText" />
@@ -826,9 +834,9 @@
         </ListPanel>
 
         <!-- Header -->
-        <Standard.TopPanel Parameter.Title="@ConfigMenuText">
+        <Standard.TopPanel Id="TopPanel" VisualDefinition="TopPanel" PositionYOffset="-196" Parameter.Title="@ConfigMenuText">
           <Children>
-            <ListPanel DoNotAcceptEvents="false" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" MarginTop="60" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+            <ListPanel DoNotAcceptEvents="false" WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="128" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginBottom="2" StackLayout.LayoutMethod="HorizontalLeftToRight">
               <Children>
                 <ButtonWidget DoNotPassEventsToChildren="true" Command.Click="ExecutePresetDefault" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="60" MarginBottom="3" HorizontalAlignment="Center" VerticalAlignment="Top" Brush="Header.Tab.Left">
                   <Children>
@@ -861,7 +869,7 @@
         <RichTextWidget DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginBottom="50" Brush="SPOptions.OptionName.Text" Text="@LockHintText" />
 
         <!-- Done/ Close Buttons -->
-        <Standard.DialogCloseButtons Parameter.CancelButtonAction="ExecuteCancel" Parameter.CancelButtonText="@CancelText" Parameter.DoneButtonAction="ExecuteDone" Parameter.DoneButtonText="@DoneText" />
+        <Standard.DialogCloseButtons VisualDefinition="BottomMenu" PositionYOffset="100" Parameter.CancelButtonAction="ExecuteCancel" Parameter.CancelButtonText="@CancelText" Parameter.DoneButtonAction="ExecuteDone" Parameter.DoneButtonText="@DoneText" />
 
       </Children>
     </Widget>

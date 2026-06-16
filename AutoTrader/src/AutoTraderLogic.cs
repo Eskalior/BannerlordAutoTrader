@@ -12,7 +12,9 @@ namespace AutoTrader
     {
         public bool IsTradingActive { get; set; }
 
-        private ILogicConnector _logicConnector;
+        private readonly ILogicConnector _logicConnector;
+
+        private AutoTraderLogicConnector Connector => (AutoTraderLogicConnector)_logicConnector;
 
         private float _availableInventoryCapacity;
         private int _availablePlayerGold;
@@ -26,6 +28,11 @@ namespace AutoTrader
             AutoTraderHelpers.PrintDebugMessage("####### AutoTrader Initialization #######");
             _logicConnector = logicConnector;
             
+        }
+
+        public void OnApplicationTick()
+        {
+            Connector.TickInventoryDisplayRefresh();
         }
 
         public void PerformAutoTrade(bool isCaravan = false)
@@ -59,6 +66,7 @@ namespace AutoTrader
                 Sell();
                 BuyProcess(BuyFilter);
                 //BuyHorses();
+                Connector.BeginInventoryDisplayRefresh();
             } catch ( Exception e)
             {
                 AutoTraderHelpers.PrintMessage("My Lord! Something terrible happened to our autotraders! The last we heard of them is:\n" + e.ToString());
