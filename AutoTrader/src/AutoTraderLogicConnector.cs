@@ -22,6 +22,8 @@ namespace AutoTrader
         public bool _isBuying = false;
 
         private ItemRosterElement _currentItemRosterElement;
+        private InventoryLogic _inventoryLogic;
+        private int _inventoryDisplayRefreshTicks;
 
         bool ILogicConnector.IsCaravan { get { return _isCaravan; } set { _isCaravan = value; } }
         bool ILogicConnector.IsBuying { get { return _isBuying; } set { _isBuying = value; } }
@@ -226,19 +228,64 @@ namespace AutoTrader
             {
                 InventoryScreenHelper.OpenScreenAsTrade(Settlement.CurrentSettlement.ItemRoster, Settlement.CurrentSettlement.Town,
                     InventoryScreenHelper.InventoryCategoryType.None, null);
-                return true;
             }
             else if (merchantType == MerchantType.Village)
             {
                 InventoryScreenHelper.OpenScreenAsTrade(Settlement.CurrentSettlement.ItemRoster, Settlement.CurrentSettlement.Village, InventoryScreenHelper.InventoryCategoryType.None, null);
-                return true;
             }
             else if (merchantType == MerchantType.Caravan)
             {
                 InventoryScreenHelper.OpenTradeWithCaravanOrAlleyParty(MobileParty.ConversationParty, InventoryScreenHelper.InventoryCategoryType.None);
-                return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
+
+            return TryPrepareInventoryLogic();
+        }
+
+        /// <summary>
+        /// In 1.4.6, TransactionDebt invokes TotalAmountChange without a null-check.
+        /// Autotrading runs before the trade UI wires its handler, so we provide a temporary no-op.
+        /// </summary>
+        private bool TryPrepareInventoryLogic()
+        {
+            _inventoryLogic = InventoryScreenHelper.GetActiveInventoryState()?.InventoryLogic;
+            if (_inventoryLogic == null)
+            {
+                AutoTraderHelpers.PrintDebugMessage("Failed to get active inventory logic!");
+                return false;
+            }
+
+            if (_inventoryLogic.TotalAmountChange == null)
+            {
+                _inventoryLogic.TotalAmountChange = _ => { };
+            }
+            return true;
+        }
+
+        internal void BeginInventoryDisplayRefresh()
+        {
+            _inventoryDisplayRefreshTicks = 15;
+        }
+
+        internal void TickInventoryDisplayRefresh()
+        {
+            if (_inventoryDisplayRefreshTicks <= 0)
+            {
+                return;
+            }
+
+            if (InventoryScreenHelper.GetActiveInventoryState() == null)
+            {
+                _inventoryDisplayRefreshTicks = 0;
+                return;
+            }
+
+            _inventoryLogic = InventoryScreenHelper.GetActiveInventoryState()?.InventoryLogic ?? _inventoryLogic;
+            _inventoryLogic?.TotalAmountChange?.Invoke(_inventoryLogic.TotalAmount);
+            _inventoryDisplayRefreshTicks--;
         }
 
         public int GetMerchantGold()
@@ -335,7 +382,7 @@ namespace AutoTrader
                 _isBuying ? InventoryLogic.InventorySide.OtherInventory : InventoryLogic.InventorySide.PlayerInventory,
                 _isBuying ? InventoryLogic.InventorySide.PlayerInventory : InventoryLogic.InventorySide.OtherInventory,
                 _currentItemRosterElement, EquipmentIndex.None, EquipmentIndex.None, CharacterObject.PlayerCharacter);
-            InventoryScreenHelper.GetActiveInventoryState().InventoryLogic.AddTransferCommand(transferCommand);
+            _inventoryLogic.AddTransferCommand(transferCommand);
             AutoTraderHelpers.PrintDebugMessage(" - Transfer of item " + GetItemName() + " complete! (" + (_isBuying? "Buy" : "Sell") + ")");
         }
 
@@ -349,7 +396,7 @@ namespace AutoTrader
 
         public int GetItemPrice()
         {
-            var result = InventoryScreenHelper.GetActiveInventoryState().InventoryLogic.GetItemPrice(_currentItemRosterElement.EquipmentElement, _isBuying);
+            var result = _inventoryLogic.GetItemPrice(_currentItemRosterElement.EquipmentElement, _isBuying);
             AutoTraderHelpers.PrintDebugMessage(" - ItemPrice: " + result.ToString());
             return result;
         }
@@ -363,13 +410,13 @@ namespace AutoTrader
 
         public int GetCostOfRosterElement()
         {
-            var result = InventoryScreenHelper.GetActiveInventoryState().InventoryLogic.GetCostOfItemRosterElement(_currentItemRosterElement, _isBuying ? InventoryLogic.InventorySide.OtherInventory : InventoryLogic.InventorySide.PlayerInventory);
+            var result = _inventoryLogic.GetCostOfItemRosterElement(_currentItemRosterElement, _isBuying ? InventoryLogic.InventorySide.OtherInventory : InventoryLogic.InventorySide.PlayerInventory);
             AutoTraderHelpers.PrintDebugMessage(" - CostOfElement: " + result.ToString());
             return result;
         }
         public float GetAveragePriceFactorItemCategory()
         {
-            var result = InventoryScreenHelper.GetActiveInventoryState().InventoryLogic.GetAveragePriceFactorItemCategory(_currentItemRosterElement.EquipmentElement.Item.ItemCategory);
+            var result = _inventoryLogic.GetAveragePriceFactorItemCategory(_currentItemRosterElement.EquipmentElement.Item.ItemCategory);
             AutoTraderHelpers.PrintDebugMessage(" - AveragePriceFactorItemCategory: " + result.ToString());
             return result;
         }
