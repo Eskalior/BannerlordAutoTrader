@@ -19,6 +19,7 @@ namespace AutoTrader
         void SetCurrentElementById(int itemId);
         void SetCurrentElementByName(string itemName);
         int GetInitialGold();
+        bool IsPartyAtSea();
         int GetTroopWage();
         float GetCurrentWeight();
         float GetInventoryCapacity();
@@ -26,6 +27,9 @@ namespace AutoTrader
         List<string> GetPlayerItemRosterNames();
         int GetNumPartyMembers();
         int GetNumLivestockAnimals();
+        int GetNumMounts();
+        int GetNumOfPackAnimals();
+        float GetHerdingPenalty();
         int GetMerchantItemRosterSize();
         List<string> GetLocks();
         bool IsItemLocked();
@@ -36,6 +40,10 @@ namespace AutoTrader
         float GetItemWeight();
         bool IsWeaponDesignEmpty();
         bool IsPackAnimal();
+        bool IsNormalHorse();
+        bool IsWarHorse();
+        bool IsNobleHorse();
+        bool IsCamel();
         bool IsItemGrain();
         bool IsItemHardwood();
         int GetPartyHardwoodIndex();

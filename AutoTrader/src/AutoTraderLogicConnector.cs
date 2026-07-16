@@ -3,23 +3,151 @@ using Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.ComponentInterfaces;
 using TaleWorlds.CampaignSystem.Inventory;
 using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Core;
+using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
 namespace AutoTrader
 {
     class AutoTraderLogicConnector: ILogicConnector
     {
-
         public bool _isCaravan = false;
         public bool _isBuying = false;
+
+        private static bool _isInitialized;
+        private static Func<int, int, float> _getHerdingModifierDelegate;
+        private static InventoryCapacityModel _cachedInventoryCapacityModel;
+
+        private static PartySpeedModel FindHerdingModel(PartySpeedModel rootModel)
+        {
+            PartySpeedModel current = rootModel;
+
+            var baseModelProperty = typeof(PartySpeedModel).GetProperty(
+                "BaseModel",
+                BindingFlags.Instance | BindingFlags.NonPublic
+            );
+
+            if (baseModelProperty == null)
+            {
+                AutoTraderHelpers.PrintDebugMessage(
+                    " -  PartySpeedModel has no BaseModel property"
+                );
+                return null;
+            }
+
+            int depth = 0;
+            const int MaxDepth = 10;
+
+            while (current != null && depth++ < MaxDepth)
+            {
+                Type type = current.GetType();
+
+                MethodInfo herdingMethod = type.GetMethod(
+                    "GetHerdingModifier",
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly
+                );
+
+                if (herdingMethod != null)
+                {
+                    AutoTraderHelpers.PrintDebugMessage(
+                        $" - Herding model found: {type.FullName}"
+                    );
+                    return current;
+                }
+
+                var next = baseModelProperty.GetValue(current) as PartySpeedModel;
+
+                if (next == null || ReferenceEquals(next, current))
+                {
+                    AutoTraderHelpers.PrintDebugMessage(
+                        $" - Reached end of PartySpeedModel chain at {type.FullName}"
+                    );
+                    return null;
+                }
+
+                AutoTraderHelpers.PrintDebugMessage(
+                    $" - Skipping PartySpeedModel: {type.FullName}"
+                );
+
+                current = next;
+            }
+
+            AutoTraderHelpers.PrintDebugMessage(
+                " - Herding model not found in PartySpeedModel chain"
+            );
+
+            return null;
+        }
+
+        private static void EnsureInitialized()
+        {
+            if (_isInitialized)
+                return;
+
+            try
+            {
+                var models = Campaign.Current?.Models;
+                if (models == null)
+                    return;
+
+                PartySpeedModel rootModel =
+                    models.PartySpeedCalculatingModel;
+
+                if (rootModel == null)
+                    return;
+
+                AutoTraderHelpers.PrintDebugMessage(
+                    $" - Root PartySpeedModel: {rootModel.GetType().FullName}"
+                );
+
+                PartySpeedModel herdingModel =
+                    FindHerdingModel(rootModel);
+
+                if (herdingModel == null)
+                {
+                    AutoTraderHelpers.PrintDebugMessage(
+                        " - No PartySpeedModel implements GetHerdingModifier"
+                    );
+                    return;
+                }
+
+                MethodInfo herdingMethod =
+                    herdingModel.GetType().GetMethod(
+                        "GetHerdingModifier",
+                        BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly
+                    );
+
+                _getHerdingModifierDelegate =
+                    (Func<int, int, float>)herdingMethod.CreateDelegate(
+                        typeof(Func<int, int, float>),
+                        herdingModel
+                    );
+
+                _cachedInventoryCapacityModel =
+                    models.InventoryCapacityModel;
+
+                _isInitialized = true;
+
+                AutoTraderHelpers.PrintDebugMessage(
+                    " - Herding modifier initialized"
+                );
+            }
+            catch (Exception ex)
+            {
+                AutoTraderHelpers.PrintDebugMessage(
+                    $" - Herding initialization failed:\n{ex}"
+                );
+            }
+        }
 
         private ItemRosterElement _currentItemRosterElement;
         private InventoryLogic _inventoryLogic;
@@ -47,6 +175,12 @@ namespace AutoTrader
             AutoTraderHelpers.PrintDebugMessage(" - InitialGold: " + PartyBase.MainParty.Owner.Gold.ToString());
             return PartyBase.MainParty.Owner.Gold;
         }
+
+        public bool IsPartyAtSea() {
+            AutoTraderHelpers.PrintDebugMessage(" - PartyAtSea: " + PartyBase.MainParty.MobileParty.IsCurrentlyAtSea.ToString());
+            return PartyBase.MainParty.MobileParty.IsCurrentlyAtSea;
+        }
+
         public int GetTroopWage()
         {
             // ToDo: Whole daily wage
@@ -100,11 +234,80 @@ namespace AutoTrader
             AutoTraderHelpers.PrintDebugMessage(" - NumPartyMembers: " + PartyBase.MainParty.NumberOfAllMembers.ToString());
             return PartyBase.MainParty.NumberOfAllMembers;
         }
+
+        public int GetNumInfantry()
+        {
+            AutoTraderHelpers.PrintDebugMessage(" - NumInfantry: " + PartyBase.MainParty.NumberOfMenWithoutHorse.ToString());
+            return PartyBase.MainParty.NumberOfMenWithoutHorse;
+        }
+
         public int GetNumLivestockAnimals()
         {
             AutoTraderHelpers.PrintDebugMessage(" - NumLivestockAnimals: " + PartyBase.MainParty.ItemRoster.NumberOfLivestockAnimals.ToString());
             return PartyBase.MainParty.MobileParty.ItemRoster.NumberOfLivestockAnimals;
         }
+
+        public int GetNumMounts()
+        {
+            AutoTraderHelpers.PrintDebugMessage(" - NumMounts: " + PartyBase.MainParty.ItemRoster.NumberOfMounts.ToString());
+            return PartyBase.MainParty.MobileParty.ItemRoster.NumberOfMounts;
+        }
+
+        public int GetNumOfPackAnimals()
+        {
+            AutoTraderHelpers.PrintDebugMessage(" - NumOfPackAnimals: " + PartyBase.MainParty.ItemRoster.NumberOfPackAnimals.ToString());
+            return PartyBase.MainParty.MobileParty.ItemRoster.NumberOfPackAnimals;
+        }
+
+        public float GetHerdingPenalty()
+        {
+            if (PartyBase.MainParty.MobileParty.IsCurrentlyAtSea || AutoTraderConfig.UseMaxFleetCapacityValue)
+                return 0f;
+
+            EnsureInitialized();
+
+            if (!_isInitialized || _getHerdingModifierDelegate == null)
+                return 0f;
+
+            int totalMenCount = GetNumPartyMembers();
+            int infantryCount = GetNumInfantry();
+
+            int livestockCount = GetNumLivestockAnimals();
+            int packAnimalCount = GetNumOfPackAnimals();
+            int mountCount = GetNumMounts();
+
+            if (_isBuying)
+            {
+                if (IsLivestock())
+                    livestockCount++;
+                else if (IsPackAnimal())
+                    packAnimalCount++;
+                else
+                    mountCount++;
+            }
+            else
+            {
+                if (!(IsLivestock() || IsPackAnimal()))
+                    mountCount--;
+            }
+
+            int mountedInfantry = MathF.Min(infantryCount, mountCount);
+
+            int herdSize =
+                livestockCount +
+                packAnimalCount +
+                MathF.Max(0, mountCount - mountedInfantry);
+
+            float herdingPenalty =
+                _getHerdingModifierDelegate(totalMenCount, herdSize);
+
+            AutoTraderHelpers.PrintDebugMessage(
+                $" - HerdingPenalty: {herdingPenalty}"
+            );
+
+            return herdingPenalty;
+        }
+
         public int GetMerchantItemRosterSize()
         {
             if (_isCaravan)
@@ -161,8 +364,10 @@ namespace AutoTrader
         }
         public float GetItemWeight()
         {
-            AutoTraderHelpers.PrintDebugMessage(" - ItemWeight: " + _currentItemRosterElement.EquipmentElement.Item.Weight.ToString());
-            return _currentItemRosterElement.EquipmentElement.Item.Weight;
+            EnsureInitialized();
+            float itemWeight = _cachedInventoryCapacityModel.GetItemEffectiveWeight(_currentItemRosterElement.EquipmentElement, PartyBase.MainParty.MobileParty, IsPartyAtSea(), out _);
+            AutoTraderHelpers.PrintDebugMessage(" - ItemWeight: " + itemWeight.ToString());
+            return itemWeight;
         }
 
         public bool IsWeaponDesignEmpty()
@@ -177,6 +382,35 @@ namespace AutoTrader
             AutoTraderHelpers.PrintDebugMessage(" - IsPackAnimal: " + result.ToString());
             return result;
         }
+
+        public bool IsNormalHorse()
+        {
+            var result = _currentItemRosterElement.EquipmentElement.Item.ItemCategory.StringId == "horse";
+            AutoTraderHelpers.PrintDebugMessage(" - IsNormalHorse: " + result.ToString());
+            return result;
+        }
+
+        public bool IsWarHorse()
+        {
+            var result = _currentItemRosterElement.EquipmentElement.Item.ItemCategory.StringId == "war_horse";
+            AutoTraderHelpers.PrintDebugMessage(" - IsWarHorse: " + result.ToString());
+            return result;
+        }
+
+        public bool IsNobleHorse()
+        {
+            var result = _currentItemRosterElement.EquipmentElement.Item.ItemCategory.StringId== "noble_horse";
+            AutoTraderHelpers.PrintDebugMessage(" - IsNobleHorse: " + result.ToString());
+            return result;
+        }
+
+        public bool IsCamel()
+        {
+            var result = _currentItemRosterElement.EquipmentElement.Item.ItemCategory.StringId == "camel";
+            AutoTraderHelpers.PrintDebugMessage(" - IsCamel: " + result.ToString());
+            return result;
+        }
+
         public bool IsItemGrain()
         {
             var result = _currentItemRosterElement.EquipmentElement.Item == DefaultItems.Grain;
@@ -344,10 +578,6 @@ namespace AutoTrader
 
             // Check if already bought / sold
             if (doneItems != null && doneItems.Exists(x => x == itemRosterElement.EquipmentElement.Item.Name.ToString()))
-                return true;
-
-            // Exclude horses when buying for now
-            if (AutoTraderHelpers.IsHorse(itemObject) && _isBuying)
                 return true;
 
             // Filter by type

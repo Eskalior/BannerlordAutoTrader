@@ -85,8 +85,7 @@ namespace AutoTrader
 
         public static bool IsTradeGood(ItemObject itemObject)
         {
-            if (itemObject.ItemType == ItemObject.ItemTypeEnum.Goods
-                || itemObject.ItemType == ItemObject.ItemTypeEnum.Animal)
+            if (itemObject.ItemType == ItemObject.ItemTypeEnum.Goods)
                 return true;
             return false;
         }

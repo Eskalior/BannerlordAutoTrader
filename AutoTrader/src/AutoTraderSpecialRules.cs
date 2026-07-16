@@ -24,21 +24,42 @@ namespace AutoTrader
 
         public static bool CheckBuyCattleRule(ILogicConnector logicConnector)
         {
-            return logicConnector.GetNumPartyMembers() >= logicConnector.GetNumLivestockAnimals();
+            return !(logicConnector.GetHerdingPenalty() < 0);
         }
 
         // Horses
-        public static bool CheckBuyHorsesRules(ILogicConnector logicConnector, int buyoutPrice, int availablePlayerGold)
+        public static bool CheckBuyHorsesCondition(ILogicConnector logicConnector)
         {
-            if (logicConnector.IsPackAnimal() && AutoTraderConfig.BuyHorsesValue)
-            {
-                // Buy pack horses rule
-                if (logicConnector.GetNumPartyMembers() > logicConnector.GetNumLivestockAnimals() && buyoutPrice * 2 < availablePlayerGold)
-                    return true;
+            return AutoTraderConfig.BuyHorsesValue && logicConnector.IsHorse();
+        }
 
-                // TODO: Add max herding setting
+        public static bool CheckBuyHorsesRules(ILogicConnector logicConnector)
+        {
+            return !(logicConnector.GetHerdingPenalty() < 0);
+        }
+
+        public static bool CheckSellHorsesCondition(ILogicConnector logicConnector)
+        {
+            return AutoTraderConfig.SellHorsesValue && logicConnector.IsHorse();
+        }
+
+        public static bool CheckSellHorsesRules(ILogicConnector logicConnector)
+        {
+            if (!logicConnector.IsPartyAtSea() && !AutoTraderConfig.UseMaxFleetCapacityValue) {
+                float currentWeight = logicConnector.GetCurrentWeight();
+                float inventoryCapacity = logicConnector.GetInventoryCapacity();
+                if (logicConnector.IsPackAnimal() && currentWeight > inventoryCapacity - 100)
+                {//cant find horses carry capacity in code but is 100 for carry horses and 20 for nomral horses
+                    AutoTraderHelpers.PrintDebugMessage("- do not sell: this pack animal is needed to maintain carrying capacity");
+                    return false;
+                }
+                else if (currentWeight > inventoryCapacity - 20)
+                {
+                    AutoTraderHelpers.PrintDebugMessage("- do not sell: this horse is needed to maintain carrying capacity");
+                    return false;
+                }
             }
-            return false;
+            return true;
         }
 
         // Resupply hardwood

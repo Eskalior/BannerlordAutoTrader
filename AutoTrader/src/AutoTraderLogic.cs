@@ -346,16 +346,6 @@ namespace AutoTrader
             // Retrieve price
             buyoutPrice = _logicConnector.GetCostOfRosterElement();
 
-            // Special Rules
-            // Horses
-            if (_logicConnector.IsHorse())
-            {
-                if (AutoTraderSpecialRules.CheckBuyHorsesRules(_logicConnector, buyoutPrice, _availablePlayerGold))
-                    return CheckBasicBuyRequirements(amount, buyoutPrice);
-                AutoTraderHelpers.PrintDebugMessage(" - do not buy because we need no additional horses");
-                return false; // buy no other horses
-            }
-
             // Hardwood
             if (AutoTraderSpecialRules.CheckBuyResupplyHardwoodRule(_logicConnector, amount))
             {
@@ -413,16 +403,17 @@ namespace AutoTrader
             }
 
             // Specials rules after price check
-            // Check if we have enough cattle
             if (AutoTraderSpecialRules.CheckBuyCattleCondition(_logicConnector))
             {
-                if (AutoTraderSpecialRules.CheckBuyCattleRule(_logicConnector))
-                    return CheckBasicBuyRequirements(amount, buyoutPrice);
-                else
-                {
-                    AutoTraderHelpers.PrintDebugMessage("- do not buy because we need no more cattle");
-                    return false; // Don't buy more cattle   
-                }
+                if (!AutoTraderSpecialRules.CheckBuyCattleRule(_logicConnector))
+                    return false;
+            }
+
+            // Horses
+            if (AutoTraderSpecialRules.CheckBuyHorsesCondition(_logicConnector))
+            {
+                if (!AutoTraderSpecialRules.CheckBuyHorsesRules(_logicConnector))
+                    return false;
             }
 
             // Check weight
@@ -474,13 +465,10 @@ namespace AutoTrader
             }
                 
             // Special horse rule
-            if (_logicConnector.IsHorse())
+            if (AutoTraderSpecialRules.CheckSellHorsesCondition(_logicConnector))
             {
-                if (_logicConnector.IsPackAnimal() && AutoTraderConfig.SellHorsesValue)
-                {
-                    AutoTraderHelpers.PrintDebugMessage("- do not sell because its a pack animal");
+                if (!AutoTraderSpecialRules.CheckSellHorsesRules(_logicConnector))
                     return false;
-                }
             }
 
             // Check amounts to keep
@@ -491,7 +479,7 @@ namespace AutoTrader
                 int minAmountToKeep = _logicConnector.IsItemGrain() ?
                     AutoTraderConfig.KeepGrainsMinValue : AutoTraderConfig.KeepConsumablesMinValue;
 
-                if (minAmountToKeep > amount)
+                if (minAmountToKeep >= amount)
                 {
                     AutoTraderHelpers.PrintDebugMessage("- do not sell because we dont have enough of this consumable");
                     return false;
@@ -506,10 +494,13 @@ namespace AutoTrader
             // Livestock
             if (_logicConnector.IsLivestock())
             {
-                // Sell if its treated as junk
-                if (AutoTraderConfig.JunkCattleValue)
+                // Sell if its treated as junk or herding
+                if (AutoTraderConfig.JunkCattleValue || (_logicConnector.GetHerdingPenalty()<0))
                     return CheckBasicSellRequirements(amount, buyoutPrice);
             }
+
+            if (AutoTraderSpecialRules.CheckSellHorsesCondition(_logicConnector) && (_logicConnector.GetHerdingPenalty() < 0))
+                return CheckBasicSellRequirements(amount, buyoutPrice);
 
             // Special hardwood rule
             if (AutoTraderSpecialRules.CheckBuyResupplyHardwoodRule(_logicConnector, amount))
@@ -571,9 +562,7 @@ namespace AutoTrader
                 return false;
             }
 
-
-            // ToDo: Only for carry horses? Nop, also for livestock.
-            if (!_logicConnector.IsHorse() && !_logicConnector.IsLivestock() && _logicConnector.GetItemWeight() > _availableInventoryCapacity)
+            if (_logicConnector.GetItemWeight() > _availableInventoryCapacity)
             {
                 AutoTraderHelpers.PrintDebugMessage("- do not buy because not enough capacity: " + _logicConnector.GetItemWeight().ToString() + " > " + _availableInventoryCapacity.ToString());
                 return false;
